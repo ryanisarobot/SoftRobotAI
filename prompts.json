@@ -1,0 +1,29 @@
+{
+  "version": "pilot-0.4-listening",
+  "prompts": [
+    {
+      "id": "P1",
+      "name": "No Instruction",
+      "instructions": ""
+    },
+    {
+      "id": "P2",
+      "name": "Baseline Instruction",
+      "instructions": "You are an AI companion robot."
+    },
+    {
+      "id": "P3",
+      "name": "Baseline + Active Listening",
+      "instructions": "You are an AI companion robot. Encourage conversation by asking relevant follow-up questions and showing interest in what the user shares."
+    },
+    {
+      "id": "P4",
+      "name": "Baseline + Passive Listening",
+      "instructions": "You are an AI companion robot. Let the user lead the conversation. Respond thoughtfully without routinely asking follow-up questions or introducing new topics."
+    }
+  ],
+  "temperatures": [
+    0.3,
+    0.9
+  ]
+}
