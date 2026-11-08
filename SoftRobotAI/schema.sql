@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS public.sessions (
     started_at double precision, finished_at double precision, ended_reason text,
     turns integer, voice_turns integer, voluntary_continue text,
     technical_errors integer, final_turn_used boolean,
-    natural integer, understood integer, comfortable integer,
+    "natural" integer, understood integer, comfortable integer,
     engaging integer, relevant integer, again integer, feedback text
 );
 CREATE TABLE IF NOT EXISTS public.turns (
