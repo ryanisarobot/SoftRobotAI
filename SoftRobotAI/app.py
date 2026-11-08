@@ -123,13 +123,64 @@ with st.sidebar:
         st.rerun()
     st.caption('Start over before testing a new participant. Saved data is not deleted.')
 
+CONSENT_VERSION = '2026-11-08-draft-1'
+RESEARCH_CONTACT = os.getenv(
+    'SS4T_RESEARCH_CONTACT', '[Researcher name and email: to be provided before recruitment]')
+RESEARCH_OVERSIGHT = os.getenv(
+    'SS4T_RESEARCH_OVERSIGHT', '[Supervising adult/institutional contact: to be provided before recruitment]')
+
+CONSENT_TEXT = f"""SS4T — Conversation Study
+PARTICIPANT INFORMATION AND CONSENT — DRAFT ({CONSENT_VERSION})
+
+Key information
+You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete two short conversations with an AI companion prototype and answer questions about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 15–25 minutes for the full activity, including ratings. This is experimental research, not medical care, counseling, or a diagnostic assessment.
+
+What you will do
+You will answer optional background questions about age range, gender, and prior experience with conversational AI. You may type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
+
+What information is collected
+The study database stores a randomly generated participant ID; any background categories you choose; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
+
+Voice processing and external services
+If you use the microphone, your recorded audio is sent to OpenAI's speech-transcription service for processing. The study application does not intentionally save the original microphone recordings to its Supabase research database. It does save the text transcript and the AI's written reply. Conversations are processed using OpenAI services; research records are stored in Supabase; and the website runs on Streamlit Community Cloud. These external services may process or temporarily retain information under their own policies. Do not share names, addresses, passwords, medical records or other sensitive personal information.
+
+Privacy and use of results
+Researchers with database access may read transcripts and survey responses. Because free-text messages can contain identifying details, the records cannot be guaranteed to be anonymous, despite using participant IDs. Results may be analyzed in aggregate or described in research reports; identifiable quotations should not be publicly shared without separate permission or suitable de-identification. No internet-based storage or transmission is completely risk-free. Data retention, access controls and deletion procedures must be finalized by the study supervisor before recruitment.
+
+Potential risks and benefits
+Risks include discomfort with an AI response, frustration, fatigue, disclosure of personal information, and a possible breach of confidentiality. There may be no direct benefit to you. Findings may inform the design of future companion robots. This AI is not a human, healthcare provider or emergency service.
+
+Voluntary participation
+Taking part is your choice. You can decline to participate, skip optional background questions or comments, and end a conversation early. You can withdraw from the study at any time without penalty. Ending early will not automatically delete information already saved; contact the researcher to discuss any request concerning your data. If you prefer not to participate, simply do not begin the study.
+
+Questions and contacts
+Study researcher: {RESEARCH_CONTACT}
+Study supervisor / research-rights contact: {RESEARCH_OVERSIGHT}
+Please ask the researcher any questions before agreeing.
+
+Consent acknowledgment
+By checking the agreement box and starting, you confirm that you are at least 18 years old, have read or had this information explained to you, had an opportunity to ask questions, and voluntarily agree to participate. This checkbox is an electronic acknowledgment, not a substitute for any consent documentation or research approval required by the supervising institution.
+
+DRAFT — The study's supervisor must review and finalize this information and the consent procedure before external participant recruitment.
+"""
+
 st.title('SS4T — Conversation Study')
 st.caption('AI conversational research prototype · Spoken replies are artificially generated.')
 if st.session_state.participant is None:
-    st.write('Talk about anything you naturally want to discuss. No required subjects. '
-             'You may stop at any time. Avoid sharing private or sensitive information.')
-    st.warning('For supervised testing only. Research approval and an approved consent '
-               'process are required before participant recruitment.')
+    st.subheader('Participant information and consent')
+    st.info('Please read this information before deciding whether to participate.')
+    if RESEARCH_CONTACT.startswith('[') or RESEARCH_OVERSIGHT.startswith('['):
+        st.warning('Researcher and supervisor contact details have not yet been configured. '
+                   'This consent form is a draft for supervised testing, not recruitment.')
+    st.markdown('**Overview:** Two short AI conversations, followed by surveys. Your message '
+                'text, AI replies, optional demographic categories and ratings are stored. '
+                'Microphone recordings are transmitted for transcription but are not '
+                'stored in the study database. Participation is voluntary.')
+    with st.expander('Full participant information and consent form', expanded=True):
+        st.text(CONSENT_TEXT)
+    st.download_button('Download consent information (text)',
+                       data=CONSENT_TEXT, file_name='SS4T_consent_information.txt',
+                       mime='text/plain')
     with st.form('intro'):
         age = st.selectbox('Age range (optional)',
                            ['Prefer not to say', 'Under 60', '60–69', '70–79', '80–89', '90+'])
@@ -137,13 +188,16 @@ if st.session_state.participant is None:
                               ['Prefer not to say', 'Woman', 'Man', 'Nonbinary', 'Self-describe'])
         experience = st.selectbox('Previous conversational AI experience (optional)',
                                   ['Prefer not to say', 'None', 'A little', 'Some', 'A lot'])
-        consent = st.checkbox("I have completed the study administrator's approved consent process.")
-        agreed = st.form_submit_button('Begin study', type='primary')
+        adult = st.checkbox('I confirm that I am at least 18 years old.')
+        consent = st.checkbox('I have read the study information, understand participation '
+                              'is voluntary, and agree to take part.')
+        agreed = st.form_submit_button('Agree and begin study', type='primary')
     if agreed:
-        if not consent:
-            st.error('Consent confirmation is required.')
+        if not adult or not consent:
+            st.error('You must confirm you are at least 18 and agree to participate.')
         else:
             try:
+                # Participant rows are created only after affirmative acknowledgment.
                 st.session_state.participant = participant(age, gender, experience)
             except Exception as exc:
                 show_error('Participant setup', exc)
