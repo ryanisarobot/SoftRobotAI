@@ -31,6 +31,13 @@ CREATE TABLE IF NOT EXISTS public.turn_reviews (
     FOREIGN KEY (session_id,turn_number)
         REFERENCES public.turns(session_id,turn_number) ON DELETE CASCADE
 );
+-- Separate pre-conversation design questionnaire; individual answers are optional.
+CREATE TABLE IF NOT EXISTS public.design_questionnaires (
+    participant_id text PRIMARY KEY REFERENCES public.participants(participant_id) ON DELETE CASCADE,
+    questionnaire_version text NOT NULL,
+    answers_json jsonb NOT NULL,
+    submitted_at double precision NOT NULL
+);
 -- Defense in depth: even if someone gets a Supabase public/anon API key,
 -- these tables must not expose experiment responses.
 ALTER TABLE public.participants ENABLE ROW LEVEL SECURITY;
@@ -38,5 +45,6 @@ ALTER TABLE public.assignments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.sessions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.turns ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.turn_reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.design_questionnaires ENABLE ROW LEVEL SECURITY;
 REVOKE ALL ON TABLE public.participants,public.assignments,public.sessions,
-    public.turns,public.turn_reviews FROM anon,authenticated;
+    public.turns,public.turn_reviews,public.design_questionnaires FROM anon,authenticated;
