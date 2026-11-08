@@ -6,6 +6,7 @@ import wave
 
 import streamlit as st
 from openai import OpenAI
+from questionnaire import display_questionnaire
 from study import (DURATION, FINAL_TURN_GRACE, QUESTIONS, config, database,
                    assign, participant, new_session, phase, prompt_for,
                    save_session, save_reviews)
@@ -110,6 +111,7 @@ def respond(s, text, mode):
 for field, value in [
     ('participant', None), ('ordinal', 0), ('session', None),
     ('survey_done', False), ('reviews_done', False), ('reviews', {}),
+    ('design_questionnaire_done', False),
 ]:
     if field not in st.session_state:
         st.session_state[field] = value
@@ -118,12 +120,12 @@ with st.sidebar:
     st.subheader('Study controls')
     if st.button('Start over / New participant', use_container_width=True):
         for key in ('participant', 'ordinal', 'session', 'survey_done',
-                    'reviews_done', 'reviews'):
+                    'reviews_done', 'reviews', 'design_questionnaire_done'):
             st.session_state.pop(key, None)
         st.rerun()
     st.caption('Start over before testing a new participant. Saved data is not deleted.')
 
-CONSENT_VERSION = '2026-11-08-draft-1'
+CONSENT_VERSION = '2026-11-08-draft-2'
 RESEARCH_CONTACT = os.getenv(
     'SS4T_RESEARCH_CONTACT', '[Researcher name and email: to be provided before recruitment]')
 RESEARCH_OVERSIGHT = os.getenv(
@@ -133,13 +135,13 @@ CONSENT_TEXT = f"""SS4T — Conversation Study
 PARTICIPANT INFORMATION AND CONSENT — DRAFT ({CONSENT_VERSION})
 
 Key information
-You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete two short conversations with an AI companion prototype and answer questions about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 15–25 minutes for the full activity, including ratings. This is experimental research, not medical care, counseling, or a diagnostic assessment.
+You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete a design-preferences questionnaire about a proposed soft companion robot, followed by two short conversations with an AI companion prototype and ratings about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 25–40 minutes for the full activity, including the design questionnaire and ratings. All design-questionnaire questions are optional. This is experimental research, not medical care, counseling, or a diagnostic assessment.
 
 What you will do
-You will answer optional background questions about age range, gender, and prior experience with conversational AI. You may type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
+You will answer optional background questions about age range, gender, and prior experience with conversational AI. Next, you will complete an optional design questionnaire about your preferred robot role, conversation initiation, memory and privacy, physical interaction and appearance, accessibility, everyday use, and reasons for continuing or avoiding use. These concern a proposed physical robot; no physical robot is evaluated in this online study. You may then type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
 
 What information is collected
-The study database stores a randomly generated participant ID; any background categories you choose; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
+The study database stores a randomly generated participant ID; any background categories you choose; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your design-questionnaire answers, conversation survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
 
 Voice processing and external services
 If you use the microphone, your recorded audio is sent to OpenAI's speech-transcription service for processing. The study application does not intentionally save the original microphone recordings to its Supabase research database. It does save the text transcript and the AI's written reply. Conversations are processed using OpenAI services; research records are stored in Supabase; and the website runs on Streamlit Community Cloud. These external services may process or temporarily retain information under their own policies. Do not share names, addresses, passwords, medical records or other sensitive personal information.
@@ -172,7 +174,7 @@ if st.session_state.participant is None:
     if RESEARCH_CONTACT.startswith('[') or RESEARCH_OVERSIGHT.startswith('['):
         st.warning('Researcher and supervisor contact details have not yet been configured. '
                    'This consent form is a draft for supervised testing, not recruitment.')
-    st.markdown('**Overview:** Two short AI conversations, followed by surveys. Your message '
+    st.markdown('**Overview:** An optional robot-design questionnaire, then two short AI conversations and ratings. Your message '
                 'text, AI replies, optional demographic categories and ratings are stored. '
                 'Microphone recordings are transmitted for transcription but are not '
                 'stored in the study database. Participation is voluntary.')
@@ -203,6 +205,17 @@ if st.session_state.participant is None:
                 show_error('Participant setup', exc)
             else:
                 st.rerun()
+    st.stop()
+
+if not st.session_state.design_questionnaire_done:
+    try:
+        completed = display_questionnaire(st.session_state.participant)
+    except Exception as exc:
+        show_error('Saving design questionnaire', exc)
+        st.stop()
+    if completed:
+        st.session_state.design_questionnaire_done = True
+        st.rerun()
     st.stop()
 
 try:
