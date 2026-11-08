@@ -131,4 +131,9 @@ def save_reviews(s, reviews):
                 (session_id,turn_number,rating,stood_out) VALUES (%s,%s,%s,%s)
                 ON CONFLICT (session_id,turn_number) DO UPDATE SET
                 rating=EXCLUDED.rating,stood_out=EXCLUDED.stood_out''',
-                (s['id'], int(n), rec.get('rating'), bool(rec.get('standout', False))))
+                (s['id'], int(n), json.dumps({
+                    'appropriateness': rec.get('appropriateness'),
+                    'understanding': rec.get('understanding'),
+                    'naturalness': rec.get('naturalness'),
+                    'comment': rec.get('comment', ''),
+                }), bool(rec.get('standout', False))))
