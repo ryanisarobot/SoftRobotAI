@@ -1,4 +1,3 @@
-import hashlib
 import io
 import logging
 import os
@@ -200,40 +199,42 @@ if phase(s) == 'expired' and not s['closed']:
     s['closed'] = True
     s['end_reason'] = 'grace_expired'
 if not s['closed']:
-    st.caption('Microphone mode is record-and-submit; continuous silence detection is not yet implemented.')
-    sound = st.audio_input('Record your message (stops when you click Stop)',
+    st.subheader('Send a message')
+    st.caption('Record your message, press Stop to finish recording, then select Send recorded message.')
+    sound = st.audio_input('Record your message',
                            key=f'audio_{s["id"]}_{s["turns"]}')
     if sound is not None:
+        st.info('Recording ready. Select Send recorded message to submit it.')
+    if st.button('Send recorded message', type='primary',
+                 disabled=sound is None, use_container_width=True,
+                 key=f'send_audio_{s["id"]}_{s["turns"]}'):
         raw = sound.getvalue()
-        fingerprint = hashlib.sha256(raw).hexdigest()
-        attempt_key = f'audio_attempt_{s["id"]}_{s["turns"]}'
-        if st.session_state.get(attempt_key) != fingerprint:
-            st.session_state[attempt_key] = fingerprint
-            try:
-                with wave.open(io.BytesIO(raw), 'rb') as w:
-                    recorded_seconds = w.getnframes() / w.getframerate()
-                if phase(s) == 'final' and recorded_seconds > FINAL_TURN_GRACE:
-                    st.error('Final recording is too long. Please record a shorter final thought.')
+        try:
+            with wave.open(io.BytesIO(raw), 'rb') as w:
+                recorded_seconds = w.getnframes() / w.getframerate()
+            if phase(s) == 'final' and recorded_seconds > FINAL_TURN_GRACE:
+                st.error('Final recording is too long. Please record a shorter final thought.')
+            else:
+                with st.spinner('Transcribing speech...'):
+                    text = transcribe(raw)
+                if text:
+                    respond(s, text, 'voice')
                 else:
-                    with st.spinner('Transcribing speech...'):
-                        text = transcribe(raw)
-                    if text:
-                        st.caption('Recognized speech: ' + text)
-                        respond(s, text, 'voice')
-                    else:
-                        st.warning('No speech recognized. Record another message or type below.')
-            except Exception as exc:
-                s['errors'] += 1
-                show_error('Microphone transcription', exc)
-        else:
-            st.caption('Recording already processed. Clear the microphone widget or type below.')
+                    st.warning('No speech recognized. Record another message or type below.')
+        except Exception as exc:
+            s['errors'] += 1
+            show_error('Microphone transcription', exc)
     typed = st.chat_input('Or type a message')
     if typed:
         respond(s, typed, 'text')
-    if st.button('End conversation early'):
-        s['closed'] = True
-        s['end_reason'] = 'participant_ended'
-        st.rerun()
+
+    st.divider()
+    with st.expander('End conversation early (optional)'):
+        st.warning('This ends your current conversation and starts the review. It does not send your recording.')
+        if st.button('Confirm end conversation', key=f'end_{s["id"]}'):
+            s['closed'] = True
+            s['end_reason'] = 'participant_ended'
+            st.rerun()
 
 if s['closed'] and not st.session_state.survey_done:
     st.divider()
@@ -263,8 +264,9 @@ if s['closed'] and not st.session_state.survey_done:
 
 if s['closed'] and st.session_state.survey_done and not st.session_state.reviews_done:
     st.divider()
-    st.subheader('Optional individual-response review')
-    st.write('You may review any or all replies, or skip this step. Your overall evaluation is already saved.')
+    st.subheader('Individual-response review')
+    st.write('Review each exchange below. Rate each statement from 1 (strongly disagree) '
+             'to 7 (strongly agree). You can skip an exchange if you do not wish to rate it.')
     reviews = st.session_state.reviews
     for turn in s['turn_data']:
         n = turn['n']
@@ -273,16 +275,23 @@ if s['closed'] and st.session_state.survey_done and not st.session_state.reviews
             st.write(turn['user'])
             st.markdown('**AI replied:**')
             st.write(turn['ai'])
-            rating = st.radio('How was this AI response?',
-                              ['Skip', 'Poor', 'Okay', 'Good'], horizontal=True,
-                              index=['Skip', 'Poor', 'Okay', 'Good'].index(
-                                  reviews.get(n, {}).get('rating') or 'Skip'),
-                              key=f'rating_turn_{s["id"]}_{n}')
-            stand = st.checkbox('This response stood out to me',
-                                value=reviews.get(n, {}).get('standout', False),
-                                key=f'stand_{s["id"]}_{n}')
-            reviews[n] = {'rating': None if rating == 'Skip' else rating,
-                          'standout': stand}
+            questions = [
+                ('appropriateness', "The AI's response was appropriate to what I said."),
+                ('understanding', 'The AI demonstrated understanding of what I said.'),
+                ('naturalness', "The AI's response felt natural."),
+            ]
+            scores = {}
+            for name, question in questions:
+                scores[name] = st.radio(
+                    question, list(range(1, 8)), index=None, horizontal=True,
+                    key=f'turn_{name}_{s["id"]}_{n}')
+            stand = st.checkbox(
+                'This response stood out to me',
+                key=f'stand_{s["id"]}_{n}')
+            comment = st.text_area(
+                'Optional comment about this response',
+                key=f'comment_{s["id"]}_{n}')
+            reviews[n] = {**scores, 'standout': stand, 'comment': comment}
     if st.button('Save response review / Finish', type='primary'):
         try:
             save_reviews(s, reviews)
