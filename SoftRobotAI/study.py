@@ -106,8 +106,10 @@ def save_session(s, ratings, feedback, continuation, model, voice):
               s['cfg']['version'], model, voice, s['started'], time.time(), s['end_reason'],
               s['turns'], s['voice_turns'], continuation, s['errors'], s['final_used'],
               *[ratings[k] for k, _ in QUESTIONS], feedback]
-    update = ','.join(f'{c}=EXCLUDED.{c}' for c in columns if c != 'session_id')
-    q = (f"INSERT INTO sessions ({','.join(columns)}) VALUES "
+    # Quote identifiers: "natural" is a reserved PostgreSQL keyword.
+    quoted_columns = ','.join(f'"{c}"' for c in columns)
+    update = ','.join(f'"{c}"=EXCLUDED."{c}"' for c in columns if c != 'session_id')
+    q = (f"INSERT INTO sessions ({quoted_columns}) VALUES "
          f"({','.join(['%s'] * len(columns))}) ON CONFLICT (session_id) DO UPDATE SET {update}")
     with database() as db:
         db.execute(q, values)
