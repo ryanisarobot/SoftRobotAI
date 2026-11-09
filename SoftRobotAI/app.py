@@ -120,12 +120,14 @@ with st.sidebar:
     st.subheader('Study controls')
     if st.button('Start over / New participant', use_container_width=True):
         for key in ('participant', 'ordinal', 'session', 'survey_done',
-                    'reviews_done', 'reviews', 'design_questionnaire_done'):
+                    'reviews_done', 'reviews', 'design_questionnaire_done',
+                    'design_questionnaire_page', 'design_questionnaire_answers',
+                    'design_scroll_reset'):
             st.session_state.pop(key, None)
         st.rerun()
     st.caption('Start over before testing a new participant. Saved data is not deleted.')
 
-CONSENT_VERSION = '2026-11-08-draft-2'
+CONSENT_VERSION = '2026-11-08-draft-3'
 RESEARCH_CONTACT = os.getenv(
     'SS4T_RESEARCH_CONTACT', '[Researcher name and email: to be provided before recruitment]')
 RESEARCH_OVERSIGHT = os.getenv(
@@ -135,10 +137,10 @@ CONSENT_TEXT = f"""SS4T — Conversation Study
 PARTICIPANT INFORMATION AND CONSENT — DRAFT ({CONSENT_VERSION})
 
 Key information
-You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete a design-preferences questionnaire about a proposed soft companion robot, followed by two short conversations with an AI companion prototype and ratings about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 25–40 minutes for the full activity, including the design questionnaire and ratings. All design-questionnaire questions are optional. This is experimental research, not medical care, counseling, or a diagnostic assessment.
+You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete a design-preferences questionnaire about a proposed soft companion robot, followed by two short conversations with an AI companion prototype and ratings about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 30–45 minutes for the full activity, including the design questionnaire and ratings; actual completion time has not been established by pilot testing. All design-questionnaire questions are optional. This is experimental research, not medical care, counseling, or a diagnostic assessment.
 
 What you will do
-You will answer optional background questions about age range, gender, and prior experience with conversational AI. Next, you will complete an optional design questionnaire about your preferred robot role, conversation initiation, memory and privacy, physical interaction and appearance, accessibility, everyday use, and reasons for continuing or avoiding use. These concern a proposed physical robot; no physical robot is evaluated in this online study. You may then type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
+You will answer optional background questions about age range, gender, and prior experience with conversational AI. Next, you will be invited to answer approximately 31 optional, mostly multiple-choice design questions across six short sections. These cover everyday activities and social preferences, initial reactions to a proposed robot, conversations, memory and privacy, physical interaction and appearance, accessibility, and reasons for continued or discontinued use. These concern a proposed physical robot; no physical robot is evaluated in this online study. You may then type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
 
 What information is collected
 The study database stores a randomly generated participant ID; any background categories you choose; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your design-questionnaire answers, conversation survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
