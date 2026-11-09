@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 
 from study import database
 
-VERSION = 'mvp-prestudy-2.1'
+VERSION = 'mvp-prestudy-2.2'
 ASSET_DIR = Path(__file__).resolve().parent / 'appearance_assets'
 APPEARANCE_VARIANTS = {
     'cat': 'Cat', 'dog': 'Dog', 'bear': 'Bear', 'neutral': 'Non-animal',
@@ -207,43 +207,81 @@ def display_questionnaire(participant_id):
             if kind == 'visual':
                 order_key = 'appearance_order_' + participant_id
                 if order_key not in st.session_state:
-                    options = list(APPEARANCE_VARIANTS)
-                    random.Random(int(hashlib.sha256(participant_id.encode()).hexdigest(), 16)).shuffle(options)
-                    st.session_state[order_key] = options
+                    appearance_ids = list(APPEARANCE_VARIANTS)
+                    random.Random(
+                        int(hashlib.sha256(participant_id.encode()).hexdigest(), 16)
+                    ).shuffle(appearance_ids)
+                    st.session_state[order_key] = appearance_ids
                 order = st.session_state[order_key]
-                st.write(question)
-                st.caption('All pictures are design illustrations, not photographs of a working robot.')
-                assets_ready = all((ASSET_DIR / (name + '.webp')).is_file()
-                                   for name in order)
-                if assets_ready:
-                    for start in (0, 2):
-                        cols = st.columns(2)
-                        for offset, (col, name) in enumerate(
-                                zip(cols, order[start:start+2])):
-                            with col:
-                                st.image(str(ASSET_DIR / (name + '.webp')),
-                                         use_container_width=True)
-                                st.caption(f'Option {chr(65 + start + offset)}')
-                    answer_options = [f'Option {chr(65+i)}'
-                                      for i in range(len(order))]
-                    answer_options += ['None of these', 'Not sure']
-                    if prev in order:
-                        old_choice = f'Option {chr(65 + order.index(prev))}'
-                    else:
-                        old_choice = prev
-                    index = (answer_options.index(old_choice)
-                             if old_choice in answer_options else None)
-                    choice = st.radio(
-                        'Select the design you prefer', answer_options,
-                        index=index, key=f'v2_design_{page}_{key}')
-                    page_answers[key] = (order[ord(choice[-1]) - 65]
-                                         if choice and choice.startswith('Option ')
-                                         else choice)
-                else:
-                    st.error('Image comparison cannot load. Please contact the study administrator.')
-                    page_answers[key] = None
+                st.write('Look at all four designs before choosing. The images are '
+                         'illustrations of possible robots, not photographs of working devices.')
+                assets_ready = all(
+                    (ASSET_DIR / (name + '.webp')).is_file() for name in order
+                )
                 page_answers['appearance_order'] = order
                 page_answers['appearance_version'] = 'matched-lineup-v1'
+                if assets_ready:
+                    # Two equal-sized images per row avoids crowded four-column layouts.
+                    # Fixed width prevents oversized images on large screens.
+                    for start in (0, 2):
+                        cols = st.columns(2, gap='medium')
+                        for offset, (col, name) in enumerate(
+                                zip(cols, order[start:start + 2])):
+                            label = f'Option {chr(65 + start + offset)}'
+                            with col:
+                                st.image(
+                                    str(ASSET_DIR / (name + '.webp')),
+                                    width=220,
+                                    caption=label,
+                                    alt=f'Plush companion robot design {label}'
+                                )
+                    display_options = [
+                        f'Option {chr(65 + i)}' for i in range(len(order))
+                    ] + ['None of these', 'Not sure']
+
+                    def restore(value):
+                        if value in order:
+                            return f'Option {chr(65 + order.index(value))}'
+                        return value
+
+                    def decode(value):
+                        if value and value in display_options[:len(order)]:
+                            return order[ord(value[-1]) - 65]
+                        return value
+
+                    preference_questions = [
+                        ('appearance_image',
+                         'Which design would you most like to have nearby?'),
+                        ('appearance_least',
+                         'Which design would you least like to have nearby?'),
+                        ('appearance_comforting',
+                         'Which design looks most comforting to you?'),
+                    ]
+                    for field, prompt in preference_questions:
+                        previous = restore(saved.get(field))
+                        default_index = (
+                            display_options.index(previous)
+                            if previous in display_options else None
+                        )
+                        selection = st.radio(
+                            prompt, display_options, index=default_index,
+                            horizontal=True,
+                            key=f'v2_design_{page}_{field}'
+                        )
+                        page_answers[field] = decode(selection)
+                    page_answers['appearance_reason'] = st.text_area(
+                        'Optional: What influenced your choices?',
+                        value=saved.get('appearance_reason') or '',
+                        max_chars=1000,
+                        key=f'v2_design_{page}_appearance_reason',
+                        height=80,
+                    )
+                else:
+                    st.error('The appearance images could not load. '
+                             'Please contact the study administrator.')
+                    page_answers['appearance_image'] = None
+                    page_answers['appearance_least'] = None
+                    page_answers['appearance_comforting'] = None
             elif kind == 'multi':
                 page_answers[key] = st.multiselect(
                     question, options, default=prev or [], key=f'v2_design_{page}_{key}')
