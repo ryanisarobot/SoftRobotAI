@@ -1,13 +1,20 @@
 """Optional, plain-language companion-robot MVP questionnaire, divided into short steps."""
 import json
 import time
+import random
+import hashlib
+from pathlib import Path
 
 import streamlit as st
 import streamlit.components.v1 as components
 
 from study import database
 
-VERSION = 'mvp-prestudy-2.0'
+VERSION = 'mvp-prestudy-2.1'
+ASSET_DIR = Path(__file__).resolve().parent / 'appearance_assets'
+APPEARANCE_VARIANTS = {
+    'cat': 'Cat', 'dog': 'Dog', 'bear': 'Bear', 'neutral': 'Non-animal',
+}
 
 # Each question maps to a distinct MVP design choice. Questions deliberately avoid
 # presuming that someone has previously encountered an AI companion robot.
@@ -116,9 +123,7 @@ SECTIONS = [
         'Think about a soft, animal-shaped robot that might move its arms gently. There is no '
         'physical robot to touch during this study, so it is fine to choose “Not sure.”',
         [
-            ('appearance', 'Which kind of soft appearance would you prefer to see?', 'single',
-             ['Cat', 'Dog', 'Bear', 'A different animal', 'Something that does not look like an animal',
-              'None of these', 'Not sure']),
+            ('appearance_image', 'Which of these designs would you most like to have nearby?', 'visual', None),
             ('touch', 'What would you be willing to try with it?', 'multi',
              ['Keeping it on my lap', 'Petting it', 'Holding its paw',
               'Hugging it', 'None of these', 'Not sure']),
@@ -199,7 +204,33 @@ def display_questionnaire(participant_id):
         page_answers = {}
         for key, question, kind, options in questions:
             prev = saved.get(key)
-            if kind == 'multi':
+            if kind == 'visual':
+                order_key = 'appearance_order_' + participant_id
+                if order_key not in st.session_state:
+                    options = list(APPEARANCE_VARIANTS)
+                    random.Random(int(hashlib.sha256(participant_id.encode()).hexdigest(), 16)).shuffle(options)
+                    st.session_state[order_key] = options
+                order = st.session_state[order_key]
+                st.write(question)
+                st.caption('All pictures are design illustrations, not photographs of a working robot.')
+                if all((ASSET_DIR / (name + '.webp')).is_file() for name in order):
+                    for start in (0, 2):
+                        cols = st.columns(2)
+                        for col, name in zip(cols, order[start:start+2]):
+                            with col:
+                                st.image(str(ASSET_DIR / (name + '.webp')),
+                                         caption=APPEARANCE_VARIANTS[name],
+                                         use_container_width=True)
+                else:
+                    st.warning('Appearance images have not been added to this deployment yet.')
+                answer_options = [APPEARANCE_VARIANTS[name] for name in order] + ['None of these', 'Not sure']
+                index = answer_options.index(prev) if prev in answer_options else None
+                page_answers[key] = st.radio(
+                    'Select your preferred design', answer_options, index=index,
+                    key=f'v2_design_{page}_{key}')
+                page_answers['appearance_order'] = order
+                page_answers['appearance_version'] = 'matched-lineup-v1'
+            elif kind == 'multi':
                 page_answers[key] = st.multiselect(
                     question, options, default=prev or [], key=f'v2_design_{page}_{key}')
             elif kind == 'single':
