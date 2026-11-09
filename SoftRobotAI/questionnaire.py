@@ -213,21 +213,35 @@ def display_questionnaire(participant_id):
                 order = st.session_state[order_key]
                 st.write(question)
                 st.caption('All pictures are design illustrations, not photographs of a working robot.')
-                if all((ASSET_DIR / (name + '.webp')).is_file() for name in order):
+                assets_ready = all((ASSET_DIR / (name + '.webp')).is_file()
+                                   for name in order)
+                if assets_ready:
                     for start in (0, 2):
                         cols = st.columns(2)
-                        for col, name in zip(cols, order[start:start+2]):
+                        for offset, (col, name) in enumerate(
+                                zip(cols, order[start:start+2])):
                             with col:
                                 st.image(str(ASSET_DIR / (name + '.webp')),
-                                         caption=APPEARANCE_VARIANTS[name],
                                          use_container_width=True)
+                                st.caption(f'Option {chr(65 + start + offset)}')
+                    answer_options = [f'Option {chr(65+i)}'
+                                      for i in range(len(order))]
+                    answer_options += ['None of these', 'Not sure']
+                    if prev in order:
+                        old_choice = f'Option {chr(65 + order.index(prev))}'
+                    else:
+                        old_choice = prev
+                    index = (answer_options.index(old_choice)
+                             if old_choice in answer_options else None)
+                    choice = st.radio(
+                        'Select the design you prefer', answer_options,
+                        index=index, key=f'v2_design_{page}_{key}')
+                    page_answers[key] = (order[ord(choice[-1]) - 65]
+                                         if choice and choice.startswith('Option ')
+                                         else choice)
                 else:
-                    st.warning('Appearance images have not been added to this deployment yet.')
-                answer_options = [APPEARANCE_VARIANTS[name] for name in order] + ['None of these', 'Not sure']
-                index = answer_options.index(prev) if prev in answer_options else None
-                page_answers[key] = st.radio(
-                    'Select your preferred design', answer_options, index=index,
-                    key=f'v2_design_{page}_{key}')
+                    st.error('Image comparison cannot load. Please contact the study administrator.')
+                    page_answers[key] = None
                 page_answers['appearance_order'] = order
                 page_answers['appearance_version'] = 'matched-lineup-v1'
             elif kind == 'multi':
