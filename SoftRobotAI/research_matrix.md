@@ -34,8 +34,30 @@ This map separates existing evidence from unresolved design choices. Existing st
 16. HHS consent guidance: https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/informed-consent/index.html
 
 ## Scope limitations
-- The questionnaire contains 21 optional items; it is not a validated psychometric instrument.
+- The questionnaire now contains 31 optional questions across six paginated sections (version mvp-prestudy-2.0); it is not a validated psychometric instrument. Pilot test reading time, comprehension, and dropout; shorten or branch questions if burden is excessive.
 - Questions about a proposed robot measure stated preference, not reactions to an actual working robot.
 - The existing controlled conversation experiment has six overall 1–7 questions and three individual-response 1–7 questions per exchange; it is kept separate.
 - No changes to robot safety limits, therapy/diagnosis claims, medical functionality or long-term efficacy are justified by questionnaire responses.
 - Supervisory review, approved recruitment/consent procedure and a data retention/deletion policy are required before collecting external participants.
+
+## Proposed prototype-based measurements (NOT yet in the live website)
+- **Voice audition:** present 3–4 real TTS clips reading identical text; randomize order; record preferred voice, speech intelligibility, and any unacceptable voices. Do not ask participants to estimate ideal pitch or words/minute without samples. Reference: https://www.mdpi.com/2079-9292/14/6/1106
+- **Speaking-rate comparison:** play the same voice and passage at a few controlled speeds; compare comfort and clarity; allow users to repeat samples.
+- **Voice emotional expressiveness:** compare neutral, moderately expressive, and strongly expressive examples with identical wording.
+- **Appearance preference:** show matched images or physical mockups of cat/dog/bear variants at the same size and image quality; randomize order to avoid presentation biases.
+- **Hug usability:** after engineering safety validation, offer a supervised, voluntary interaction using actual physical force and contact pressure measurements; permit immediate abort. Do not infer safe force from willingness survey responses.
+- **Memory demo:** show a short scenario of the robot remembering a benign fact, and another asking permission to save it; compare comfort/trust and observed expectations.
+- **Conversation repair and timing:** in interactive user testing, record interruptions, failed recognition, time-to-response, and whether the user felt cut off.
+- **Extended adoption:** investigate with repeated voluntary use over time; do not infer sustained engagement from one hypothetical survey item.
+
+## Question-to-decision design (new)
+- Everyday quiet time + conversation preferences → identify baseline contexts without immediately suggesting a robot as the solution.
+- Concept interest + use + preferred location → prioritize MVP demonstrations and portability.
+- Robot role + initiative + emotion response + humor → establish interaction policy, distinct from the experimentally manipulated active-listening prompts.
+- Response length + pause behavior + clarification behavior → conversational turn-taking and fallback policy.
+- Voice adjustment preferences → which user controls to expose (separate from actual voice selection).
+- Remembered gardening scenario + consent + categories + control + sharing → memory permissions and UI requirements.
+- Appearance + willingness for touch + hug initiation + stopping movement + preferred controls → physical interface options, subject to independent safety tests.
+- Final benefit + discontinuation + optional feedback → rank MVP priorities and uncover unanticipated concerns.
+
+For methodology on specific question wording and ordering, see Pew Research: https://www.pewresearch.org/writing-survey-questions/
