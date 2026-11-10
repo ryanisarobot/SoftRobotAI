@@ -9,7 +9,7 @@ from openai import OpenAI
 from questionnaire import display_questionnaire
 from study import (DURATION, FINAL_TURN_GRACE, QUESTIONS, config, database,
                    assign, participant, new_session, phase, prompt_for,
-                   save_session, save_reviews)
+                   save_session, save_reviews, ensure_design_questionnaire_table)
 
 st.set_page_config(page_title='SS4T Conversation Study', page_icon='💬', layout='centered')
 
@@ -17,6 +17,7 @@ st.set_page_config(page_title='SS4T Conversation Study', page_icon='💬', layou
 try:
     with database() as db:
         db.execute('SELECT 1')
+    ensure_design_questionnaire_table()
 except Exception:
     logging.exception('Database connection failed')
     st.error('Study database is unavailable. Contact the administrator.')
