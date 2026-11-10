@@ -141,10 +141,10 @@ Key information
 You are being invited to take part in a research study about how different AI conversational styles affect people's experiences. Participation is voluntary. If you agree, you will complete a design-preferences questionnaire about a proposed soft companion robot, followed by two short conversations with an AI companion prototype and ratings about them. Each conversation lasts up to five minutes, with a possible final-message period of up to one additional minute. Allow approximately 30–45 minutes for the full activity, including the design questionnaire and ratings; actual completion time has not been established by pilot testing. All design-questionnaire questions are optional. This is experimental research, not medical care, counseling, or a diagnostic assessment.
 
 What you will do
-You will answer optional background questions about age range, gender, and prior experience with conversational AI. Next, you will be invited to answer approximately 33 optional, mostly multiple-choice design questions across six short sections. These cover everyday activities and social preferences, initial reactions to a proposed robot, conversations, memory and privacy, physical interaction and appearance, accessibility, and reasons for continued or discontinued use. These concern a proposed physical robot; no physical robot is evaluated in this online study. You may then type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
+You will answer optional background questions about exact age, gender, and prior experience with conversational AI. Next, you will be invited to answer approximately 33 optional, mostly multiple-choice design questions across six short sections. These cover everyday activities and social preferences, initial reactions to a proposed robot, conversations, memory and privacy, physical interaction and appearance, accessibility, and reasons for continued or discontinued use. These concern a proposed physical robot; no physical robot is evaluated in this online study. You may then type or record messages to the AI. Different participants and conversations receive different AI instructions and model settings by assignment. After each conversation, you will rate the overall experience on 1–7 scales, indicate whether you would continue the conversation, and may leave comments. You can also review individual exchanges and rate the AI's appropriateness, understanding, and naturalness on 1–7 scales, mark noteworthy responses, and provide optional comments.
 
 What information is collected
-The study database stores a randomly generated participant ID; any background categories you choose; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your design-questionnaire answers, conversation survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
+The study database stores a randomly generated participant ID; any optional background information you provide, including exact age; assigned AI conditions and model settings; session times, turn counts and technical-error counts; your typed messages and transcripts of spoken messages; the AI's written replies; response timing; and your design-questionnaire answers, conversation survey answers, individual-response ratings and optional comments. We do not ask for your name in this form.
 
 Voice processing and external services
 If you use the microphone, your recorded audio is sent to OpenAI's speech-transcription service for processing. The study application does not intentionally save the original microphone recordings to its Supabase research database. It does save the text transcript and the AI's written reply. Conversations are processed using OpenAI services; research records are stored in Supabase; and the website runs on Streamlit Community Cloud. These external services may process or temporarily retain information under their own policies. Do not share names, addresses, passwords, medical records or other sensitive personal information.
@@ -187,8 +187,9 @@ if st.session_state.participant is None:
                        data=CONSENT_TEXT, file_name='SS4T_consent_information.txt',
                        mime='text/plain')
     with st.form('intro'):
-        age = st.selectbox('Age range (optional)',
-                           ['Prefer not to say', 'Under 60', '60–69', '70–79', '80–89', '90+'])
+        age = st.number_input('Age in years (optional)', min_value=18,
+                              max_value=120, value=None, step=1,
+                              help='Leave blank if you prefer not to say.')
         gender = st.selectbox('Gender (optional)',
                               ['Prefer not to say', 'Woman', 'Man', 'Nonbinary', 'Self-describe'])
         experience = st.selectbox('Previous conversational AI experience (optional)',
@@ -203,7 +204,7 @@ if st.session_state.participant is None:
         else:
             try:
                 # Participant rows are created only after affirmative acknowledgment.
-                st.session_state.participant = participant(age, gender, experience)
+                st.session_state.participant = participant(str(age) if age is not None else 'Prefer not to say', gender, experience)
             except Exception as exc:
                 show_error('Participant setup', exc)
             else:
