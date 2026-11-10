@@ -10,7 +10,7 @@ import streamlit.components.v1 as components
 
 from study import database
 
-VERSION = 'mvp-prestudy-2.2'
+VERSION = 'mvp-prestudy-2.3'
 ASSET_DIR = Path(__file__).resolve().parent / 'appearance_assets'
 APPEARANCE_VARIANTS = {
     'cat': 'Cat', 'dog': 'Dog', 'bear': 'Bear', 'neutral': 'Non-animal',
@@ -24,9 +24,7 @@ SECTIONS = [
         'A little about your day',
         'First, a few questions about everyday experiences. You do not need to know anything about robots.',
         [
-            ('quiet_times', 'When you have some quiet time, what do you most often enjoy doing?', 'multi',
-             ['Talking with someone', 'Watching TV or listening to music', 'Reading or doing a hobby',
-              'Resting quietly', 'Spending time with a pet', 'Something else', 'Prefer not to say']),
+            ('quiet_times', 'When you have some quiet time, what do you most often enjoy doing?', 'text', None),
             ('conversation_time', 'Are there times when you especially enjoy having someone to talk with?', 'multi',
              ['In the morning', 'In the afternoon', 'In the evening', 'When I have had a difficult day',
               'There is no particular time', 'I generally prefer quiet time', 'Not sure']),
@@ -36,6 +34,9 @@ SECTIONS = [
               'I prefer to lead the conversation myself', 'It depends on the situation', 'Not sure']),
             ('comfort_object', 'Do you ever enjoy holding something soft, such as a pillow, blanket, or stuffed animal?', 'single',
              ['Often', 'Sometimes', 'Rarely', 'Never', 'Not sure']),
+            ('texture_preference', 'When holding something like a pillow, blanket, or stuffed animal, what texture do you usually prefer?', 'single',
+             ['Soft', 'Firm', 'No preference', 'It depends on the item',
+              'I do not enjoy holding these', 'Not sure']),
             ('everyday_challenge', 'Is there an everyday activity you wish were a little easier or more enjoyable?', 'text', None),
         ],
     ),
@@ -48,6 +49,9 @@ SECTIONS = [
             ('first_reaction', 'How interested would you be in trying something like this?', 'single',
              ['Very interested', 'Somewhat interested', 'Neither interested nor uninterested',
               'Not very interested', 'Not at all interested', 'Not sure']),
+            ('perceived_usefulness', 'How useful, if at all, do you think a robot like this would be in your daily life?', 'single',
+             ['Not at all useful', 'Slightly useful', 'Moderately useful',
+              'Very useful', 'Extremely useful', 'Not sure']),
             ('potential_use', 'Which of these would you be interested in using it for, if any?', 'multi',
              ['Having a conversation', 'Listening to stories or music', 'Holding or hugging it',
               'Getting reminders or everyday information', 'Relaxing quietly with it nearby',
@@ -73,12 +77,12 @@ SECTIONS = [
              ['Only when I speak first', 'At times I choose ahead of time',
               'It could occasionally ask if I want to talk', 'I would be happy for it to start conversations on its own',
               'Not sure']),
-            ('response_length', 'When you ask an everyday question, what kind of answer would you usually prefer?', 'single',
-             ['A short answer', 'A medium-length answer', 'A detailed answer',
-              'It depends on what I asked', 'Not sure']),
-            ('pause_behavior', 'If you pause while speaking to think of what to say next, what should it do?', 'single',
-             ['Stay quiet until I clearly finish', 'Give a brief sign it is listening',
-              'Ask if I am finished after a moment', 'Not sure']),
+            ('daily_involvement', 'How involved would you want a robot like this to be in your everyday life?', 'single',
+             ['Not involved at all', 'Only when I choose to use it',
+              'Occasionally throughout the day', 'Regularly throughout the day', 'Not sure']),
+            ('pause_behavior', 'If you stop talking for a few seconds, when would you prefer the robot to respond?', 'single',
+             ['Right away', 'After a short pause', 'Only when I indicate I am finished',
+              'It depends on the situation', 'Not sure']),
             ('repair', 'If it did not understand something you said, what would you prefer?', 'single',
              ['Ask me to repeat it', 'Tell me what it thinks I meant and ask if that is right',
               'Ask a short, specific question about the unclear part', 'Not sure']),
