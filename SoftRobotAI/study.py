@@ -44,6 +44,24 @@ def database():
     return psycopg.connect(url, sslmode='require', connect_timeout=10, row_factory=dict_row)
 
 
+
+def ensure_design_questionnaire_table():
+    """Create the optional design survey table if this database lacks it.
+
+    Run during application startup so a missing table is detected before the
+    participant completes the questionnaire. This does not modify existing rows.
+    """
+    with database() as db:
+        db.execute("""
+            CREATE TABLE IF NOT EXISTS design_questionnaires (
+                participant_id TEXT PRIMARY KEY,
+                questionnaire_version TEXT NOT NULL,
+                answers_json JSONB NOT NULL,
+                submitted_at DOUBLE PRECISION NOT NULL
+            )
+        """)
+
+
 def assign(participant_id, cfg):
     with database() as db:
         # Serialize assignments globally to prevent concurrent participants
