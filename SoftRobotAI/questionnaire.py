@@ -199,8 +199,8 @@ def display_questionnaire(participant_id):
     st.progress((page + 1) / len(SECTIONS), text=f'Section {page + 1} of {len(SECTIONS)}')
     st.subheader(title)
     st.write(intro)
-    st.caption('There are no right or wrong answers. All questions are optional; '
-               'you may leave any blank. Your answers help guide a future design.')
+    st.caption('There are no right or wrong answers. Please complete the questionnaire '
+               'before proceeding. You may skip individual questions you prefer not to answer.')
 
     # Persist answers when moving between sections, independent of widget lifetime.
     saved = st.session_state[answers_key]
