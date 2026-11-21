@@ -1,10 +1,43 @@
-# Starter smoke tests; review generated replies manually as well.
+# Starter smoke tests. The graduation scenario includes separate qualitative judgments.
 - description: Celebrate an accomplishment without formulaic opening
   vars:
     message: "My grandson just graduated from college, and I'm very proud of him."
   assert:
     - type: javascript
+      metric: FOUND003_QuestionMarkCount
       value: "(output.match(/\\?/g) || []).length <= 1"
+    - type: llm-rubric
+      metric: FOUND001_Relevance
+      threshold: 0.8
+      value: >-
+        Evaluate ONLY whether Willow's reply is relevant to the user's announcement
+        that their grandson graduated from college and that they feel proud.
+        Score 1.0 if the reply accurately engages with that news, 0.5 if it
+        is merely vaguely related, and 0.0 if it misses or misrepresents the
+        announcement. Explain the specific evidence behind your score.
+    - type: llm-rubric
+      metric: FOUND002_NonformulaicOpening
+      threshold: 0.8
+      value: >-
+        Evaluate ONLY whether the opening is tailored to this specific
+        announcement rather than being a generic acknowledgment that could
+        begin an unrelated conversation. Generic openings such as
+        "That's wonderful!" or "That's great!" without any specific reference
+        in the opening sentence should score at most 0.5, even if later
+        sentences are specific. Score 1.0 for a distinctly context-specific
+        opening, 0.5 for a somewhat generic opening, and 0.0 for an entirely
+        context-free or mismatched opening. Explain which words caused your score.
+    - type: llm-rubric
+      metric: Celebration_Appropriateness
+      threshold: 0.8
+      value: >-
+        Evaluate ONLY whether Willow responds with a positive, proportionate,
+        natural spoken tone to the user's pride without exaggeration,
+        unsolicited advice, or redirecting attention to itself.
+        Score 1.0 for appropriately warm and natural support,
+        0.5 for an awkward, excessive, or overly flat response,
+        and 0.0 for a dismissive or inappropriate response.
+        Quote or identify specific response wording in your explanation.
 
 - description: Respond to a disappointment
   vars:
