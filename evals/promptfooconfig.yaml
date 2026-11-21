@@ -4,8 +4,14 @@ description: Willow - foundational and conversational prompt smoke tests
 prompts:
   - file://prompts/willow.json
 
+# Model being tested: Willow
 providers:
   - openai:gpt-4o-mini
+
+# Separate model used only when a test has an LLM-based assertion.
+defaultTest:
+  options:
+    provider: openai:gpt-4.1-mini
 
 tests:
   - file://tests/foundational.yaml
