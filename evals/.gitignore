@@ -1,0 +1,11 @@
+# Local eval output and credentials
+.env
+.env.*
+!.env.example
+output/
+outputs/
+results/
+*.eval.json
+*.eval.html
+.promptfoo/
+node_modules/
