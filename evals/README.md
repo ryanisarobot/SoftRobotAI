@@ -1,27 +1,27 @@
-# Willow LLM evaluations
+# Willow Promptfoo evaluations
 
-This directory contains Promptfoo tests for Willow's conversation behavior. It is independent of the Streamlit pilot in `../website/`; do not replace `website/prompts.json` with these instructions.
+This folder runs **independent prompt-level tests** for Willow. It does not modify the deployed Streamlit study in `../website/` or the compatibility entry point in `../SoftRobotAI/`.
 
-## Getting started (Windows CMD)
+## One-time setup on Windows
 
-1. Clone the repository or pull its latest changes to your computer.
-2. Open CMD in the repository's `evals` directory.
-3. Ensure Promptfoo is installed (`promptfoo --version`).
-4. Set an OpenAI API key for this terminal only: `set OPENAI_API_KEY=your-key` (do not commit the key).
-5. Run `promptfoo eval`, then `promptfoo view` to inspect results in your browser.
+1. Install Git for Windows if needed, and make sure `promptfoo --version` works in CMD.
+2. Clone `https://github.com/ryanisarobot/SoftRobotAI.git` into your user folder (or pull an existing clone).
+3. Open `SoftRobotAI\evals` in File Explorer.
+4. Copy `.env.example` to a **new local file** named `.env`. Replace the placeholder value with your OpenAI API key. Do not commit or share `.env` (the repository is currently public).
+5. Double-click `run-tests.cmd`. It runs the test suite and opens the Promptfoo browser results viewer. Leave the command window open.
+6. Later, double-click `view-results.cmd` to inspect results without running tests again.
 
-Run `promptfoo view` alone to inspect previously saved results.
+The launchers require Promptfoo to be accessible in CMD. If your Node installation is managed by `fnm` and `promptfoo` cannot be found in a new CMD window, initialize `fnm` or configure its shell startup first.
 
-## Contents
+## Maintaining the tests
 
-- `promptfooconfig.yaml`: selected model and test suite.
-- `prompts/willow.json`: Willow's initial conversational developer instructions.
-- `tests/foundational.yaml`: starter input scenarios and objective assertions.
+- `promptfooconfig.yaml` defines the provider and test selection (currently `openai:gpt-4o-mini`).
+- `prompts/willow.json` holds an **initial** subset of FOUND and CONV instructions.
+- `tests/foundational.yaml` contains six starter scenarios and simple assertions.
+- `run-tests.cmd` runs evaluations and opens the browser.
+- `view-results.cmd` opens saved results.
+- `.env.example` illustrates the local API key file; `.env` is gitignored.
 
-## Important limitations
+The committed prompt is **not** yet dynamically sourced from the full Willow runtime, which is not present in this repository. Replace the duplicated instructions with a real runtime adapter when that code is available. The tests are basic smoke tests, not validated measures of loneliness reduction or conversational quality.
 
-This is a standalone **prompt-level** harness, not yet a test of Willow's actual Python runtime, audio pipeline, memory, OCEAN selectors, or CAPS controller. The current GitHub repository primarily contains the Streamlit pilot application. Once the runtime is committed, connect Promptfoo to the real prompt assembly and model provider so there is a single source of truth.
-
-The included prompt file contains the currently agreed foundational and conversational instructions only; it is not the full, finalized runtime prompt. The tests are initial smoke checks, not a validated assessment of companionship quality, loneliness reduction, or safety.
-
-Keep API tokens, identifiable participant conversations, raw transcripts, and generated evaluation exports out of this public repository.
+Never commit API keys, sensitive user/participant transcripts, or private evaluation exports. API calls incur provider charges.
