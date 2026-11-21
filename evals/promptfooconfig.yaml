@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+description: Willow - foundational and conversational prompt smoke tests
+
+prompts:
+  - file://prompts/willow.json
+
+providers:
+  - openai:gpt-4o-mini
+
+tests:
+  - file://tests/foundational.yaml
