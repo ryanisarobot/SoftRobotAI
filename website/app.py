@@ -128,11 +128,8 @@ with st.sidebar:
         st.rerun()
     st.caption('Start over before testing a new participant. Saved data is not deleted.')
 
-CONSENT_VERSION = '2026-11-13-v1'
-RESEARCH_CONTACT = os.getenv(
-    'SS4T_RESEARCH_CONTACT', '[Researcher name and email: to be provided before recruitment]')
-RESEARCH_OVERSIGHT = os.getenv(
-    'SS4T_RESEARCH_OVERSIGHT', '[Supervising adult/institutional contact: to be provided before recruitment]')
+CONSENT_VERSION = '2026-11-22-v2'
+RESEARCH_CONTACT = 'rykrulee@gmail.com'
 
 CONSENT_TEXT = f"""SS4T — Conversation Study
 PARTICIPANT INFORMATION AND CONSENT ({CONSENT_VERSION})
@@ -159,9 +156,7 @@ Voluntary participation
 Taking part is your choice. You can decline to participate, skip optional background questions or comments, and end a conversation early. You can withdraw from the study at any time without penalty. Ending early will not automatically delete information already saved; contact the researcher to discuss any request concerning your data. If you prefer not to participate, simply do not begin the study.
 
 Questions and contacts
-Study researcher: {RESEARCH_CONTACT}
-Study supervisor / research-rights contact: {RESEARCH_OVERSIGHT}
-Please ask the researcher any questions before agreeing.
+{RESEARCH_CONTACT}
 
 Consent acknowledgment
 This study accepts participants aged 18 or older. By checking the agreement box and starting, you confirm that you have read or had this information explained to you, had an opportunity to ask questions, and voluntarily agree to participate. This electronic acknowledgment does not replace any review or consent documentation required by the supervising institution.
@@ -173,9 +168,6 @@ st.caption('AI conversational research prototype · Spoken replies are artificia
 if st.session_state.participant is None:
     st.subheader('Participant information and consent')
     st.info('Please read this information before deciding whether to participate.')
-    if RESEARCH_CONTACT.startswith('[') or RESEARCH_OVERSIGHT.startswith('['):
-        st.warning('Researcher and supervisor contact details have not yet been configured. '
-                   'Configure these contacts before inviting external participants.')
     st.markdown('**Overview:** A robot-design questionnaire, then two short AI conversations and ratings. Your message '
                 'text, AI replies, optional demographic categories and ratings are stored. '
                 'Microphone recordings are transmitted for transcription but are not '
