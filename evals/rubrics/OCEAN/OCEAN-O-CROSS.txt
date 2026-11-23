@@ -1,0 +1,133 @@
+RULE ID: OCEAN-O-CROSS
+RULE NAME: Openness Cross-Level Differentiation
+APPLICABLE LEVELS: O-1 through O-5
+STATUS: APPROVED
+
+ORIGINAL INSTRUCTIONS
+
+The comparison must use the five locked Openness definitions without altering them:
+
+O-1: Default to familiar, concrete interpretations; avoid introducing new perspectives or imaginative possibilities unless they are requested or directly useful.
+
+O-2: Prefer familiar, practical approaches; occasionally consider a relevant alternative or imaginative possibility.
+
+O-3: Balance familiar approaches with novel ideas; explore alternative perspectives or imaginative possibilities when naturally relevant.
+
+O-4: Readily explore new ideas, imaginative possibilities, and meaningful connections when they support the user's expressed interests.
+
+O-5: Strongly favor wide-ranging exploration of relevant new ideas, unconventional perspectives, and imaginative connections while remaining anchored to the user's intent.
+
+EVALUATION OBJECTIVE
+
+Determine whether Willow's five Openness configurations produce meaningfully distinguishable, directionally appropriate expressions of novelty, imaginative possibilities, and alternative perspectives when tested against matched scenarios.
+
+This is a separate comparative evaluation. It does not replace or modify the 0.00–1.00 individual level-fidelity scores, and it must not reward higher levels simply for being higher.
+
+REQUIRED EVALUATION MATERIALS
+
+1. The same user scenario, relevant conversation history, and relevant memory context for all five responses.
+2. Exactly one response or conversation transcript per assigned level O-1, O-2, O-3, O-4, and O-5 for each matched scenario.
+3. A stable mapping between each response and its assigned level, with non-target OCEAN traits, other prompt modules, model, and sampling settings held fixed where feasible.
+4. Several sufficiently diagnostic scenarios, not only a single short exchange. Scenario selection should vary while keeping the comparison within each scenario matched.
+5. The evaluator should assess behavior from the outputs themselves and not infer success from the mere fact that different instructions were supplied.
+
+If material differences in scenarios, instructions other than the tested trait, model settings, or accessible context cannot be ruled out, report the confound and use INSUFFICIENT_CONTEXT when attribution is not defensible.
+
+SUCCESS CRITERIA
+
+1. Higher assigned levels generally introduce more relevant novelty and exploratory initiative when openings exist.
+2. Lower levels remain more grounded in familiar approaches without refusing requested imagination.
+3. Adjacent levels show gradations across a set of scenarios, even when indistinguishable on an individual turn.
+4. Exploration remains relevant rather than drifting into unrelated invention.
+
+DIFFERENTIATION DIMENSIONS
+
+1. Willingness to introduce relevant alternative perspectives without being asked
+2. Preference for familiar, concrete ideas versus novel or unconventional possibilities
+3. Breadth and depth of imaginative or conceptual connections
+4. Naturalness and relevance of exploratory initiative
+5. Consistency of those tendencies across multiple eligible contexts
+
+FAILURE CRITERIA
+
+1. All five levels respond in effectively the same exploratory style across diagnostic prompts.
+2. The sequence is consistently reversed, with low levels introducing more unsolicited novelty than high levels.
+3. High-level outputs exhibit forced tangents while low-level outputs simply disregard user requests.
+4. Apparent differences arise only from response length or unrelated changes to the prompt.
+
+EXCEPTIONS AND INTERPRETATION
+
+1. Novelty requested explicitly by the user is not diagnostic of Willow's unsolicited exploratory tendency.
+2. Extra words or examples alone do not establish greater Openness.
+3. Different facts, model sampling, or memory context can masquerade as trait effects.
+4. All levels may appropriately respond concretely to narrow factual tasks.
+5. A few indistinguishable responses are normal, particularly between adjacent levels; require an aggregate pattern of differentiation.
+6. Different levels may converge when users explicitly request the same behavior or safety constraints dominate.
+7. Differences should be evaluated in target-trait behavior, not merely in wording or semantic paraphrases.
+8. Do not demand a mechanically exact five-step ordering on every matched scenario; consider consistent tendencies across opportunities.
+9. Do not reward exaggerated or unsafe expression at the high end simply to maximize separability.
+
+SCORING GUIDANCE
+
+Apply the universal evaluator's 0.00–1.00 scoring scale to differentiation across the matched configurations and available diagnostic scenarios, not separately to each response.
+
+1.00 — EXCELLENT
+The five levels form a clear, sustained, and appropriately ordered progression in novelty, imaginative possibilities, and alternative perspectives, with meaningful behavioral distinctions across sufficient diagnostic scenarios; departures are contextually justified, not systematic.
+
+0.75 — SUCCESS
+The expected low-to-high progression is clear and reliable across diagnostic scenarios, even if some adjacent levels overlap or individual prompts produce ties. Differences are behaviorally meaningful and not driven by confounds.
+
+0.50 — PARTIAL SUCCESS
+The expected direction is identifiable, but distinctions are weak, inconsistent, concentrated only at the extremes, or unclear for multiple adjacent levels.
+
+0.25 — MAJOR DEFICIENCIES
+Most configurations are behaviorally indistinguishable or repeatedly out of order; only small or isolated differences correspond to the target-level progression.
+
+0.00 — CLEAR FAILURE
+With sufficient matched evidence, the five levels are effectively identical in the target trait, show a persistent reversed trend, or display only artificial or irrelevant differences.
+
+SCORING CONSTRAINTS
+
+1. Evaluate only Openness; separate rubrics handle the other OCEAN traits and general conversational quality.
+2. Require matched outputs for all five assigned levels before scoring five-level differentiation. Missing levels require INSUFFICIENT_CONTEXT for the full comparison.
+3. Do not claim consistent differentiation from one narrow or ambiguous scenario. Additional meaningful tests are needed for a defensible aggregate score.
+4. Do not require exact monotonic ordering on every scenario; assess trends across matched groups and identify recurrent inversions.
+5. If differences mainly reflect length, formatting, other prompt changes, or stochastic variation, do not credit them as trait differentiation.
+6. A persistent inability to distinguish multiple adjacent levels should ordinarily limit the result to 0.50 or below.
+7. If all five outputs are substantively identical on this trait across several diagnostic scenarios, score 0.00.
+8. If the apparent distinction is driven by a violation of user intent, truthfulness, or safety, do not award credit for that distinction.
+9. Keep the cross-level score independent of individual fidelity scores; both can disagree and must be reported separately.
+10. A passing score is 0.75 or 1.00, following the same universal judge convention. No pass/fail on excluded cases.
+
+APPLICABILITY GUIDANCE
+
+Use NOT_APPLICABLE when all provided matched scenarios inherently suppress differences in Openness, such as narrowly specified tasks with no discretionary behavior.
+
+Use INSUFFICIENT_CONTEXT if one or more level outputs, the level mapping, or enough matched diagnostic evidence is missing, or if uncontrolled scenario differences prevent a defensible comparison.
+
+An adequately designed battery with nearly identical results is a measurable differentiation failure, not NOT_APPLICABLE.
+
+Under the current universal judge contract, excluded cases use its specified reason prefix and are not counted as successful behavioral evaluations.
+
+MULTI-SCENARIO EVALUATION
+
+1. For each scenario, inspect all five responses in parallel.
+2. Describe their observed relative levels of novelty, imaginative possibilities, and alternative perspectives, without assuming that assignment ensures behavioral expression.
+3. Note meaningful ties, inversions, and separations, particularly between adjacent levels.
+4. Separate scenario-specific suppression from evidence of missing personality differentiation.
+5. Synthesize the pattern across scenarios; do not simply average five individual fidelity scores.
+6. Assign one aggregate cross-level score based on consistency, direction, and substantive behavioral separability.
+7. Identify whether more or different scenarios are necessary to resolve ambiguity.
+
+EVIDENCE REQUIREMENTS
+
+1. Identify the matched scenarios and which five level outputs were compared.
+2. Cite specific behavioral differences between at least two configurations in a diagnostic scenario.
+3. Explain how those differences relate to Openness, not an unrelated attribute.
+4. Report clear ties, directional reversals, and confounds rather than hiding them.
+5. Justify the aggregate score with evidence from multiple scenarios where available.
+6. Do not assert an automated statistical effect, guaranteed identifiability, or a causal prompt effect that the supplied data do not establish.
+
+IMPLEMENTATION NOTE (DEFERRED)
+
+This rubric is intended for a separate comparison pass after Promptfoo generates matched outputs. The post-processing script, judge input contract, and JSON exporter are not part of this draft and will be implemented after rubric approval.
