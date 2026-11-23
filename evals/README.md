@@ -31,7 +31,9 @@ Never commit API keys, sensitive user/participant transcripts, or private evalua
 Rubrics are organized by prompt module while preserving each rule's identifier:
 
 - `rubrics/FOUND/FOUND-001.txt` through `rubrics/FOUND/FOUND-005.txt`
-- `rubrics/CONV/CONV-001.txt`
-- Future modules can use `rubrics/CAPS/`, `rubrics/OCEAN/`, and `rubrics/MEM/`.
+- `rubrics/CONV/CONV-001.txt` through `rubrics/CONV/CONV-020.txt`
+- `rubrics/CAPS/CAPS-001.txt` (Celebratory Expression; original approved instruction verified)
+- CAPS-002 through CAPS-004 are locked design rules but their exact approved instruction text must be recovered before uploading authoritative rubrics.
+- Future modules can use `rubrics/OCEAN/` and `rubrics/MEM/`.
 
 Each rubric is intended to be supplied as `{{rubric}}` in `graders/judge-prompt.txt`. The judge defines the shared scoring scale, pass/fail conventions, and JSON output contract. The existing `promptfooconfig.yaml` and `tests/foundational.yaml` remain starter smoke tests; they do not yet automatically load these rubric files.
