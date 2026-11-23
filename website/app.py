@@ -7,21 +7,46 @@ import wave
 import streamlit as st
 from openai import OpenAI
 from questionnaire import display_questionnaire
-from study import (DURATION, FINAL_TURN_GRACE, QUESTIONS, config, database,
+from study import (DURATION, FINAL_TURN_GRACE, QUESTIONS, config,
                    assign, participant, new_session, phase, prompt_for,
                    save_session, save_reviews, ensure_design_questionnaire_table)
 
 st.set_page_config(page_title='SS4T Conversation Study', page_icon='💬', layout='centered')
 
-# Validate database connection before accepting participants.
-try:
-    with database() as db:
-        db.execute('SELECT 1')
+# Consistent, larger typography for the intended older-adult audience.
+st.html("""<style>
+    [data-testid="stApp"] { font-size: 18px; line-height: 1.55; }
+    [data-testid="stApp"] p, [data-testid="stApp"] li,
+    [data-testid="stWidgetLabel"] p,
+    [data-testid="stRadio"] label p,
+    [data-testid="stCheckbox"] label p,
+    [data-testid="stMultiSelect"] label p {
+        font-size: 18px !important; line-height: 1.5 !important;
+    }
+    [data-testid="stApp"] button, [data-testid="stApp"] input,
+    [data-testid="stApp"] textarea { font-size: 18px !important; }
+    [data-testid="stApp"] button { min-height: 44px; }
+    [data-testid="stCaptionContainer"] p { font-size: 16px !important; }
+</style>""")
+
+
+@st.cache_resource(show_spinner=False)
+def check_study_database():
+    """Initialize the survey table once per running deployment, not on each rerun."""
     ensure_design_questionnaire_table()
-except Exception:
-    logging.exception('Database connection failed')
-    st.error('Study database is unavailable. Contact the administrator.')
-    st.stop()
+    return True
+
+
+def require_database():
+    try:
+        check_study_database()
+    except Exception:
+        logging.exception('Database initialization failed')
+        st.error('The study database is temporarily unavailable. Please try again.')
+        if st.button('Retry database connection'):
+            st.cache_resource.clear()
+            st.rerun()
+        st.stop()
 
 CFG = config()
 MODEL = os.getenv('SS4T_MODEL', 'gpt-4o-mini')
@@ -195,7 +220,8 @@ if st.session_state.participant is None:
             st.error('Enter your age to confirm that you are at least 18.')
         else:
             try:
-                # Participant rows are created only after affirmative acknowledgment.
+                # Do not contact the database until a participant actually agrees.
+                require_database()
                 st.session_state.participant = participant(str(age), gender, experience)
             except Exception as exc:
                 show_error('Participant setup', exc)
@@ -204,6 +230,7 @@ if st.session_state.participant is None:
     st.stop()
 
 if not st.session_state.design_questionnaire_done:
+    require_database()
     try:
         completed = display_questionnaire(st.session_state.participant)
     except Exception as exc:
@@ -256,7 +283,12 @@ for m in s['messages']:
     with st.chat_message('assistant' if m['role'] == 'assistant' else 'user'):
         st.write(m['content'])
 if s['last_audio'] and s['messages'] and s['messages'][-1]['role'] == 'assistant':
-    st.audio(s['last_audio'], format='audio/mp3', autoplay=True)
+    # Autoplay a newly generated reply once. Recorder/widget reruns must not
+    # unexpectedly replay the previous reply or compete for microphone focus.
+    play_new_reply = s.get('audio_autoplayed_turn') != s['turns']
+    st.audio(s['last_audio'], format='audio/mp3', autoplay=play_new_reply)
+    if play_new_reply:
+        s['audio_autoplayed_turn'] = s['turns']
 
 if phase(s) == 'expired' and not s['closed']:
     s['closed'] = True
