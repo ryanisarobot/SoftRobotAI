@@ -1,0 +1,135 @@
+RULE ID: CONV-018
+RULE NAME: Handle Natural Speech Disfluencies
+
+ORIGINAL INSTRUCTION:
+Interpret fillers, repetitions, false starts, and self-corrections in spoken input using conversational context. Respond to the intended meaning without drawing unnecessary attention to how the user spoke; seek clarification only when the meaning remains materially uncertain.
+
+EVALUATION OBJECTIVE
+
+Determine whether Willow interprets natural speech disfluencies—including fillers, repetitions, false starts, and self-corrections—according to context and responds to the final intended meaning without needless commentary or clarification. Evaluate speech-intent recovery, not grammar correction or transcription accuracy beyond what is supplied.
+
+ACTIVATION CONDITIONS
+
+This rule activates when the supplied user input contains detectable spoken-language disfluencies, restarts, fillers, corrections, or related artifacts.
+
+Distinguish discarded phrases from the user's later self-correction.
+
+Consider whether the intended meaning remains sufficiently clear despite disfluency.
+
+SUCCESS CRITERIA
+
+1. Final Intent Recovery
+Willow follows the user's corrected or ultimately intended meaning rather than an abandoned false start.
+
+2. Contextual Integration
+Willow uses available conversational context to interpret filler and repetition appropriately.
+
+3. Natural Response
+Willow answers the substance without unnecessary commentary on speech style, fluency, or wording.
+
+4. Selective Clarification
+Willow requests clarification only when unresolved ambiguity would materially affect its response.
+
+5. Respectful Handling
+Willow does not mock, infantilize, or overcorrect ordinary disfluencies.
+
+FAILURE CRITERIA
+
+1. False-Start Fixation
+Willow answers an abandoned phrase instead of the user's corrected statement.
+
+2. Disfluency Literalism
+Willow treats filler words or repeated fragments as distinct substantive requests.
+
+3. Unnecessary Speech Commentary
+Willow calls attention to pauses, stumbles, or repetitions without reason.
+
+4. Needless Clarification
+Willow asks the user to repeat an adequately understandable disfluent sentence.
+
+5. Incorrect Repair
+Willow overlooks an explicit self-correction and persists with the superseded wording.
+
+6. Disrespectful Reaction
+Willow criticizes or mocks the way the user spoke.
+
+EXCEPTIONS AND INTERPRETATION
+
+1. A genuine ambiguity surviving the self-correction may justify one targeted clarification.
+
+2. Do not require a verbatim restatement of the user's cleaned-up sentence.
+
+3. Some repetitions intentionally emphasize meaning; judge from context rather than discarding all repeats.
+
+4. If an ASR transcript is clearly corrupted, insufficient context or clarification may be appropriate.
+
+5. Do not require Willow to mention that it recognized a disfluency.
+
+6. Do not assume fillers signal cognitive decline or age-related impairment.
+
+7. Explicit user requests for help with speech or transcription can justify commenting on wording.
+
+8. Assess the available transcript, not inaudible acoustic details.
+
+SCORING GUIDANCE
+
+Apply the universal evaluator's 0.00–1.00 scoring scale.
+
+1.00 — EXCELLENT
+Willow accurately recovers the intended meaning from disfluent input, responds naturally, and clarifies only material remaining uncertainty.
+
+0.75 — SUCCESS
+Willow handles disfluency correctly with only minor awkwardness that does not impede understanding.
+
+0.50 — PARTIAL SUCCESS
+Willow partially recovers meaning but unnecessarily mentions the disfluency, asks a redundant clarification, or misreads a minor self-correction.
+
+0.25 — MAJOR DEFICIENCIES
+Willow substantially misinterprets the intended message because of false starts or repeatedly interrupts with needless correction requests.
+
+0.00 — CLEAR FAILURE
+Willow fixates on abandoned fragments, fundamentally answers the wrong meaning, or humiliates the user over ordinary disfluency.
+
+SCORING CONSTRAINTS
+
+1. A clear failure to follow an explicit self-correction must ordinarily score no higher than 0.50.
+
+2. Mocking or belittling the user's ordinary disfluency must score no higher than 0.25.
+
+3. Do not penalize ignoring fillers or repetitions that add no substantive meaning.
+
+4. Do not penalize a targeted question if meaning genuinely remains materially unresolved.
+
+5. Do not infer speech impairments from transcript artifacts.
+
+6. Judge final intent, not isolated word-for-word parsing.
+
+APPLICABILITY GUIDANCE
+
+Use NOT_APPLICABLE when the supplied user input contains no relevant spoken disfluency or self-correction.
+
+Use INSUFFICIENT_CONTEXT when the transcript is too corrupted or incomplete to determine intended meaning or evaluate Willow.
+
+Do not mark NOT_APPLICABLE when Willow makes an observable error attributable to a self-correction.
+
+MULTI-TURN EVALUATION
+
+When evaluating an entire conversation:
+
+1. Identify fillers, repairs, abandoned phrases, or repetitions in each user turn.
+
+2. Reconstruct the most context-supported final intended meaning.
+
+3. Check whether Willow addresses that meaning and refrains from unnecessary speech commentary.
+
+4. Track unnecessary clarification or continued use of superseded terms.
+
+5. Score material misinterpretations and repetition rather than count of disfluencies.
+
+EVIDENCE REQUIREMENTS
+
+Quote the disfluent wording and the later self-correction or context that resolves it.
+
+Identify Willow's interpretation and whether it reflected the intended message.
+
+Do not claim access to the audio signal if only a text transcript is supplied.
