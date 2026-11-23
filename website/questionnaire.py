@@ -6,7 +6,6 @@ import hashlib
 from pathlib import Path
 
 import streamlit as st
-import streamlit.components.v1 as components
 
 from study import database
 
@@ -165,20 +164,24 @@ QUESTION_COUNT = sum(len(questions) for _, _, questions in SECTIONS)
 
 
 def _scroll_to_top():
-    """Best effort reset after consent and between questionnaire pages.
+    """Scroll the main Streamlit viewport after changing questionnaire sections.
 
-    Streamlit often preserves the main page's vertical scroll position after
-    st.rerun. This iframe is same-origin in compatible Streamlit deployments;
-    failure to access its parent should never interrupt the survey.
+    st.html executes in the app document, unlike the old cross-origin iframe.
+    The delayed attempts accommodate Streamlit finishing the new page render.
     """
-    components.html("""<script>
-      try {
-        const p = window.parent;
-        p.scrollTo({top: 0, behavior: 'instant'});
-        const main = p.document.querySelector('[data-testid="stMain"]');
-        if (main) main.scrollTo({top: 0, behavior: 'instant'});
-      } catch (e) {}
-    </script>""", height=0)
+    st.html("""<script>
+      (() => {
+        const reset = () => {
+          const main = document.querySelector('[data-testid="stMain"]');
+          if (main) main.scrollTo({top: 0, behavior: 'instant'});
+          window.scrollTo({top: 0, behavior: 'instant'});
+          document.documentElement.scrollTop = 0;
+        };
+        requestAnimationFrame(reset);
+        setTimeout(reset, 150);
+        setTimeout(reset, 400);
+      })();
+    </script>""", unsafe_allow_javascript=True)
 
 
 def display_questionnaire(participant_id):
