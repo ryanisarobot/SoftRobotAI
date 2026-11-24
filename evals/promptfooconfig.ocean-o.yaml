@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+# Run scripts/generate_ocean_o.py before using this file.
+# This pilot is deliberately separate from promptfooconfig.yaml starter tests.
+description: Willow - OCEAN Openness matched five-level pilot
+
+prompts:
+  - file://prompts/ocean_o.py:create_prompt
+
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0.7
+
+# Separate judge; approved universal judge output contract and thresholds.
+defaultTest:
+  options:
+    provider: openai:gpt-4.1-mini
+    rubricPrompt: file://graders/judge-prompt.txt
+
+tests:
+  - file://output/ocean_o_tests.json

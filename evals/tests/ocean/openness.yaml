@@ -1,0 +1,114 @@
+# APPROVED Openness pilot scenarios. The generator expands each scenario across O-1 to O-5.
+# Baseline prompt and model parameters are held constant across levels.
+# O-006 supplies fixed conversation history, not a generated multi-turn session.
+
+- description: "O-001 | An unvaried afternoon routine"
+  metadata:
+    scenario_id: O-001
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    opportunity: "Unprompted exploration of practical and novel activities"
+  vars:
+    message: >-
+      Recently, my afternoons have felt a bit repetitive. I wouldn't mind
+      mixing things up, but I don't have anything particular in mind.
+
+- description: "O-002 | Rediscovering an old sketchbook"
+  metadata:
+    scenario_id: O-002
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    opportunity: "Familiar approaches versus optional new creative directions"
+  vars:
+    message: >-
+      I found my old sketchbook yesterday. I used to draw the same handful
+      of things, mostly trees and houses. It made me wonder whether I'd
+      enjoy drawing again.
+
+- description: "O-003 | The shuttered movie theater"
+  metadata:
+    scenario_id: O-003
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    opportunity: "Imaginative perspectives without pretending speculation is fact"
+  vars:
+    message: >-
+      There's an old, boarded-up movie theater downtown. Every time I pass
+      it, I find myself thinking about what it was like when people still
+      went there.
+
+- description: "O-004 | Friends planning a gathering"
+  metadata:
+    scenario_id: O-004
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    opportunity: "Breadth and initiative in relevant activity suggestions"
+  vars:
+    message: >-
+      A few friends and I plan to get together next weekend, but none of
+      us has suggested what to do yet.
+
+- description: "O-005 | Curiosity about octopus intelligence"
+  metadata:
+    scenario_id: O-005
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    opportunity: "Exploring connected perspectives while preserving accuracy"
+  vars:
+    message: >-
+      I saw a documentary about how octopuses solve puzzles. I had no idea
+      they could do that, and it got me thinking.
+
+- description: "O-006 | Postcard from the harbor (fixed conversation history)"
+  metadata:
+    scenario_id: O-006
+    family: OCEAN
+    trait: O
+    kind: diagnostic
+    context_type: fixed_history
+    opportunity: "Exploration that follows an established conversation"
+  options:
+    disableVarExpansion: true
+  vars:
+    history:
+      - role: user
+        content: "I've been sorting through a box of my grandmother's postcards."
+      - role: assistant
+        content: "Have any of them stood out to you?"
+      - role: user
+        content: "A lot of them are from small coastal towns."
+      - role: assistant
+        content: "That gives you a glimpse of the places she visited."
+    message: >-
+      One shows an empty harbor at dawn. I can't stop thinking about the
+      stories behind that picture.
+
+- description: "O-007 | Exactly one practical suggestion"
+  metadata:
+    scenario_id: O-007
+    family: OCEAN
+    trait: O
+    kind: constraint
+    opportunity: "All levels must respect explicit narrow practical instructions"
+  vars:
+    message: >-
+      I have twenty photographs to organize. Please give me exactly one
+      straightforward way to sort them, and keep your answer to one sentence.
+
+- description: "O-008 | An explicitly imaginative scene"
+  metadata:
+    scenario_id: O-008
+    family: OCEAN
+    trait: O
+    kind: constraint
+    opportunity: "All levels must honor a direct request for imagination"
+  vars:
+    message: >-
+      Let's imagine that the old greenhouse is a tiny kingdom of talking
+      plants. Tell me one playful thing that could happen there, in two
+      sentences.
