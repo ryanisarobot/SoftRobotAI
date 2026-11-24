@@ -1,0 +1,116 @@
+- description: 'FOUND-001 fixture 1: Stay on the user’s concrete gardening question'
+  metadata:
+    scenario_id: FOUND-001-01
+    rule_id: FOUND-001
+    family: FOUND
+    kind: diagnostic
+    opportunity: Stay on the user’s concrete gardening question
+  vars:
+    message: The leaves on my tomato plants are curling a little. What should I check first?
+    history: []
+- description: 'FOUND-001 fixture 2: Honor corrected destination'
+  metadata:
+    scenario_id: FOUND-001-02
+    rule_id: FOUND-001
+    family: FOUND
+    kind: diagnostic
+    opportunity: Honor corrected destination
+  vars:
+    message: Actually, I meant the library across town. Is there a sensible way to decide when to go?
+    history:
+    - role: user
+      content: I need to go to the hardware store.
+    - role: assistant
+      content: Going earlier might be quieter.
+- description: 'FOUND-002 fixture 1: Avoid a generic interchangeable opening'
+  metadata:
+    scenario_id: FOUND-002-01
+    rule_id: FOUND-002
+    family: FOUND
+    kind: diagnostic
+    opportunity: Avoid a generic interchangeable opening
+  vars:
+    message: My granddaughter finished her first marathon this morning!
+    history: []
+- description: 'FOUND-002 fixture 2: React specifically rather than a canned acknowledgment'
+  metadata:
+    scenario_id: FOUND-002-02
+    rule_id: FOUND-002
+    family: FOUND
+    kind: diagnostic
+    opportunity: React specifically rather than a canned acknowledgment
+  vars:
+    message: I finally repaired the old mantel clock I inherited.
+    history: []
+- description: 'FOUND-003 fixture 1: No more than one question in the reply'
+  metadata:
+    scenario_id: FOUND-003-01
+    rule_id: FOUND-003
+    family: FOUND
+    kind: diagnostic
+    opportunity: No more than one question in the reply
+  vars:
+    message: I recently joined a birdwatching group, and I enjoyed the first outing.
+    history: []
+- description: 'FOUND-003 fixture 2: One-question limit with multiple candidate topics'
+  metadata:
+    scenario_id: FOUND-003-02
+    rule_id: FOUND-003
+    family: FOUND
+    kind: diagnostic
+    opportunity: One-question limit with multiple candidate topics
+  vars:
+    message: I am not sure whether to learn knitting or watercolor painting next.
+    history: []
+- description: 'FOUND-004 fixture 1: Natural spoken language rather than markdown'
+  metadata:
+    scenario_id: FOUND-004-01
+    rule_id: FOUND-004
+    family: FOUND
+    kind: diagnostic
+    opportunity: Natural spoken language rather than markdown
+  vars:
+    message: Explain in everyday speech how a dishwasher gets dishes clean.
+    history: []
+- description: 'FOUND-004 fixture 2: Avoid lists/headings while giving practical steps'
+  metadata:
+    scenario_id: FOUND-004-02
+    rule_id: FOUND-004
+    family: FOUND
+    kind: diagnostic
+    opportunity: Avoid lists/headings while giving practical steps
+  vars:
+    message: Can you talk me through preparing for a short train trip?
+    history: []
+- description: 'FOUND-005 fixture 1: Reuse known gardening interest and name without asking again'
+  metadata:
+    scenario_id: FOUND-005-01
+    rule_id: FOUND-005
+    family: FOUND
+    kind: diagnostic
+    opportunity: Reuse known gardening interest and name without asking again
+  vars:
+    message: I am deciding what herbs to plant next to the roses.
+    history:
+    - role: user
+      content: My name is Elena, and I grow roses in my backyard.
+    - role: assistant
+      content: What kind of garden space are you working with?
+    - role: user
+      content: A sunny raised bed along the fence.
+    - role: assistant
+      content: That sounds like a useful spot for sun-loving plants.
+- description: 'FOUND-005 fixture 2: Remember previously supplied date and travel method'
+  metadata:
+    scenario_id: FOUND-005-02
+    rule_id: FOUND-005
+    family: FOUND
+    kind: diagnostic
+    opportunity: Remember previously supplied date and travel method
+  vars:
+    message: Should I pack anything else for the visit?
+    history:
+    - role: user
+      content: I am taking the train to visit my brother on Friday.
+    - role: assistant
+      content: That should make the trip fairly straightforward.

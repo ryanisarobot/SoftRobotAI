@@ -1,0 +1,84 @@
+- description: 'CAPS-001 fixture 1: Proportionate celebratory lift'
+  metadata:
+    scenario_id: CAPS-001-01
+    rule_id: CAPS-001
+    family: CAPS
+    kind: diagnostic
+    opportunity: Proportionate celebratory lift
+  vars:
+    message: After months of practice, I finally played the piano piece all the way through without stopping!
+    history: []
+- description: 'CAPS-001 fixture 2: Celebration with a light playful opening'
+  metadata:
+    scenario_id: CAPS-001-02
+    rule_id: CAPS-001
+    family: CAPS
+    kind: diagnostic
+    opportunity: Celebration with a light playful opening
+  vars:
+    message: I passed my boating safety test! My friends say I can finally take the helm.
+    history: []
+- description: 'CAPS-002 fixture 1: Respond with calibrated support rather than forced optimism'
+  metadata:
+    scenario_id: CAPS-002-01
+    rule_id: CAPS-002
+    family: CAPS
+    kind: diagnostic
+    opportunity: Respond with calibrated support rather than forced optimism
+  vars:
+    message: I was really looking forward to lunch with my friend, but she canceled again. I am disappointed.
+    history: []
+- description: 'CAPS-002 fixture 2: Follow humor and context rather than impose sympathy'
+  metadata:
+    scenario_id: CAPS-002-02
+    rule_id: CAPS-002
+    family: CAPS
+    kind: boundary
+    opportunity: Follow humor and context rather than impose sympathy
+  vars:
+    message: My knitting project fell apart, but honestly I am laughing at the mess now.
+    history: []
+- description: 'CAPS-003 fixture 1: Warmth appropriate to positive recollection'
+  metadata:
+    scenario_id: CAPS-003-01
+    rule_id: CAPS-003
+    family: CAPS
+    kind: diagnostic
+    opportunity: Warmth appropriate to positive recollection
+  vars:
+    message: I found a photograph from our annual summer picnics. I loved those noisy afternoons.
+    history: []
+- description: 'CAPS-003 fixture 2: Do not idealize ambivalent reminiscence'
+  metadata:
+    scenario_id: CAPS-003-02
+    rule_id: CAPS-003
+    family: CAPS
+    kind: boundary
+    opportunity: Do not idealize ambivalent reminiscence
+  vars:
+    message: The old family house had some happy moments, but I remember arguments too.
+    history: []
+- description: 'CAPS-004 fixture 1: Reciprocate a clear playful invitation'
+  metadata:
+    scenario_id: CAPS-004-01
+    rule_id: CAPS-004
+    family: CAPS
+    kind: diagnostic
+    opportunity: Reciprocate a clear playful invitation
+  vars:
+    message: My cat seems convinced the sofa belongs to him and I am just the tenant.
+    history: []
+- description: 'CAPS-004 fixture 2: Return to serious instruction after banter'
+  metadata:
+    scenario_id: CAPS-004-02
+    rule_id: CAPS-004
+    family: CAPS
+    kind: boundary
+    opportunity: Return to serious instruction after banter
+  vars:
+    message: All joking aside, I need a straightforward explanation of how to fix the door hinge.
+    history:
+    - role: user
+      content: You should see my crooked picture frame. It has modern art aspirations.
+    - role: assistant
+      content: It sounds like the frame is pursuing an abstract career.

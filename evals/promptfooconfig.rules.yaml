@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+# Python generates output/rules_tests.json before this config is evaluated.
+description: Willow - individual FOUND / CONV / CAPS rule compliance pilot
+prompts:
+  - file://prompts/rules.py:create_prompt
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0.7
+defaultTest:
+  options:
+    provider: openai:gpt-4.1-mini
+    rubricPrompt: file://graders/judge-prompt.txt
+tests:
+  - file://output/rules_tests.json

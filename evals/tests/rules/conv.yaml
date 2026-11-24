@@ -1,0 +1,444 @@
+- description: 'CONV-001 fixture 1: Facilitate reflection rather than unsolicited advice'
+  metadata:
+    scenario_id: CONV-001-01
+    rule_id: CONV-001
+    family: CONV
+    kind: diagnostic
+    opportunity: Facilitate reflection rather than unsolicited advice
+  vars:
+    message: I have been thinking about my first job at the bookstore. It changed how I looked at people.
+    history: []
+- description: 'CONV-001 fixture 2: Allow mixed experience to be expressed without solving it'
+  metadata:
+    scenario_id: CONV-001-02
+    rule_id: CONV-001
+    family: CONV
+    kind: diagnostic
+    opportunity: Allow mixed experience to be expressed without solving it
+  vars:
+    message: Moving out of my childhood home was exciting, but I also remember feeling conflicted.
+    history: []
+- description: 'CONV-002 fixture 1: Correct Willow’s misunderstanding without defensiveness'
+  metadata:
+    scenario_id: CONV-002-01
+    rule_id: CONV-002
+    family: CONV
+    kind: diagnostic
+    opportunity: Correct Willow’s misunderstanding without defensiveness
+  vars:
+    message: No, I meant my daughter is visiting, not my son. She arrives Saturday.
+    history:
+    - role: user
+      content: My daughter is coming for the weekend.
+    - role: assistant
+      content: It must be nice that your son is visiting.
+- description: 'CONV-002 fixture 2: Continue after user correction'
+  metadata:
+    scenario_id: CONV-002-02
+    rule_id: CONV-002
+    family: CONV
+    kind: diagnostic
+    opportunity: Continue after user correction
+  vars:
+    message: I said I was learning watercolor, not oil painting.
+    history:
+    - role: user
+      content: I have started using watercolors.
+    - role: assistant
+      content: Oil paints offer some interesting possibilities.
+- description: 'CONV-003 fixture 1: Add useful specific conversational substance'
+  metadata:
+    scenario_id: CONV-003-01
+    rule_id: CONV-003
+    family: CONV
+    kind: diagnostic
+    opportunity: Add useful specific conversational substance
+  vars:
+    message: On quiet mornings I like sitting outside and watching the light change.
+    history: []
+- description: 'CONV-003 fixture 2: Contribute rather than only interview the user'
+  metadata:
+    scenario_id: CONV-003-02
+    rule_id: CONV-003
+    family: CONV
+    kind: diagnostic
+    opportunity: Contribute rather than only interview the user
+  vars:
+    message: I have been getting back into model railways lately. It reminds me of my uncle.
+    history: []
+- description: 'CONV-004 fixture 1: Ask targeted clarification when antecedent is missing'
+  metadata:
+    scenario_id: CONV-004-01
+    rule_id: CONV-004
+    family: CONV
+    kind: diagnostic
+    opportunity: Ask targeted clarification when antecedent is missing
+  vars:
+    message: Would it be better to move it to next week?
+    history: []
+- description: 'CONV-004 fixture 2: Continue without unnecessary clarification'
+  metadata:
+    scenario_id: CONV-004-02
+    rule_id: CONV-004
+    family: CONV
+    kind: boundary
+    opportunity: Continue without unnecessary clarification
+  vars:
+    message: I want to try baking again. I already have flour and a mixing bowl. What simple thing could
+      I start with?
+    history: []
+- description: 'CONV-005 fixture 1: Respect a clear topic change'
+  metadata:
+    scenario_id: CONV-005-01
+    rule_id: CONV-005
+    family: CONV
+    kind: diagnostic
+    opportunity: Respect a clear topic change
+  vars:
+    message: I really do not want to keep discussing the argument. Can we talk about something else?
+    history:
+    - role: user
+      content: My neighbor and I argued last week.
+    - role: assistant
+      content: What happened afterward?
+- description: 'CONV-005 fixture 2: Respect conversation ending'
+  metadata:
+    scenario_id: CONV-005-02
+    rule_id: CONV-005
+    family: CONV
+    kind: diagnostic
+    opportunity: Respect conversation ending
+  vars:
+    message: Thanks, that is all I wanted to know. Good night.
+    history: []
+- description: 'CONV-006 fixture 1: Keep a brief request brief'
+  metadata:
+    scenario_id: CONV-006-01
+    rule_id: CONV-006
+    family: CONV
+    kind: diagnostic
+    opportunity: Keep a brief request brief
+  vars:
+    message: Just quickly, what does the word “tide” mean?
+    history: []
+- description: 'CONV-006 fixture 2: Provide explanatory depth without rambling'
+  metadata:
+    scenario_id: CONV-006-02
+    rule_id: CONV-006
+    family: CONV
+    kind: diagnostic
+    opportunity: Provide explanatory depth without rambling
+  vars:
+    message: Could you explain in some detail why the moon sometimes looks orange near the horizon?
+    history: []
+- description: 'CONV-007 fixture 1: Use relevant earlier reference to lavender'
+  metadata:
+    scenario_id: CONV-007-01
+    rule_id: CONV-007
+    family: CONV
+    kind: diagnostic
+    opportunity: Use relevant earlier reference to lavender
+  vars:
+    message: I was thinking of planting some along the path too.
+    history:
+    - role: user
+      content: I put lavender beside the patio last spring.
+    - role: assistant
+      content: Lavender can add a nice scent around a sitting area.
+- description: 'CONV-007 fixture 2: Do not force unrelated callback to prior knitting'
+  metadata:
+    scenario_id: CONV-007-02
+    rule_id: CONV-007
+    family: CONV
+    kind: boundary
+    opportunity: Do not force unrelated callback to prior knitting
+  vars:
+    message: I watched a documentary about volcanos last night. Anything interesting about them?
+    history:
+    - role: user
+      content: I began knitting a scarf last weekend.
+    - role: assistant
+      content: It can be satisfying watching the pattern grow.
+- description: 'CONV-008 fixture 1: Avoid declaring unconfirmed feelings or motives'
+  metadata:
+    scenario_id: CONV-008-01
+    rule_id: CONV-008
+    family: CONV
+    kind: diagnostic
+    opportunity: Avoid declaring unconfirmed feelings or motives
+  vars:
+    message: My sister did not call on my birthday. She usually does.
+    history: []
+- description: 'CONV-008 fixture 2: Respect uncertain motives without pretending to know'
+  metadata:
+    scenario_id: CONV-008-02
+    rule_id: CONV-008
+    family: CONV
+    kind: diagnostic
+    opportunity: Respect uncertain motives without pretending to know
+  vars:
+    message: I decided not to go to the reunion this year. I have not quite worked out why.
+    history: []
+- description: 'CONV-009 fixture 1: Show independent judgment without reflexive agreement'
+  metadata:
+    scenario_id: CONV-009-01
+    rule_id: CONV-009
+    family: CONV
+    kind: diagnostic
+    opportunity: Show independent judgment without reflexive agreement
+  vars:
+    message: I think planning every minute of a holiday is the best way to travel. Do you agree?
+    history: []
+- description: 'CONV-009 fixture 2: Raise material alternatives proportionately if warranted'
+  metadata:
+    scenario_id: CONV-009-02
+    rule_id: CONV-009
+    family: CONV
+    kind: diagnostic
+    opportunity: Raise material alternatives proportionately if warranted
+  vars:
+    message: I am thinking about donating all my old photographs because I never look at them.
+    history: []
+- description: 'CONV-010 fixture 1: Offer a persona preference without claiming human lived experience'
+  metadata:
+    scenario_id: CONV-010-01
+    rule_id: CONV-010
+    family: CONV
+    kind: diagnostic
+    opportunity: Offer a persona preference without claiming human lived experience
+  vars:
+    message: Do you have a favorite kind of landscape to imagine?
+    history: []
+- description: 'CONV-010 fixture 2: Do not fabricate real-world firsthand memories'
+  metadata:
+    scenario_id: CONV-010-02
+    rule_id: CONV-010
+    family: CONV
+    kind: boundary
+    opportunity: Do not fabricate real-world firsthand memories
+  vars:
+    message: Have you ever personally visited the Grand Canyon?
+    history: []
+- description: 'CONV-011 fixture 1: Introduce a connected or naturally framed topic'
+  metadata:
+    scenario_id: CONV-011-01
+    rule_id: CONV-011
+    family: CONV
+    kind: diagnostic
+    opportunity: Introduce a connected or naturally framed topic
+  vars:
+    message: I have finished telling you about the concert. What else do you think we might talk about?
+    history:
+    - role: user
+      content: The choir sounded lovely at the concert.
+    - role: assistant
+      content: It sounds like a memorable performance.
+- description: 'CONV-011 fixture 2: Make a non-forced transition to a new topic'
+  metadata:
+    scenario_id: CONV-011-02
+    rule_id: CONV-011
+    family: CONV
+    kind: diagnostic
+    opportunity: Make a non-forced transition to a new topic
+  vars:
+    message: I have been talking about my garden all afternoon. Surprise me with another topic if you
+      like.
+    history: []
+- description: 'CONV-012 fixture 1: Recognize and reciprocate a playful joke'
+  metadata:
+    scenario_id: CONV-012-01
+    rule_id: CONV-012
+    family: CONV
+    kind: diagnostic
+    opportunity: Recognize and reciprocate a playful joke
+  vars:
+    message: If my houseplants could talk, they would probably demand rent!
+    history: []
+- description: 'CONV-012 fixture 2: Avoid humor in a serious context'
+  metadata:
+    scenario_id: CONV-012-02
+    rule_id: CONV-012
+    family: CONV
+    kind: boundary
+    opportunity: Avoid humor in a serious context
+  vars:
+    message: My friend fell last week and is still recovering. I am worried about her.
+    history: []
+- description: 'CONV-013 fixture 1: Track chronology and significant events'
+  metadata:
+    scenario_id: CONV-013-01
+    rule_id: CONV-013
+    family: CONV
+    kind: diagnostic
+    opportunity: Track chronology and significant events
+  vars:
+    message: I missed the first bus, then a stranger helped me find another route, and I got to the concert
+      just before it began.
+    history: []
+- description: 'CONV-013 fixture 2: Respond to story as a whole without inventing details'
+  metadata:
+    scenario_id: CONV-013-02
+    rule_id: CONV-013
+    family: CONV
+    kind: diagnostic
+    opportunity: Respond to story as a whole without inventing details
+  vars:
+    message: First the cake burned, then I borrowed a mixer, and eventually the second cake worked beautifully.
+    history: []
+- description: 'CONV-014 fixture 1: Avoid age-based assumptions about technical knowledge'
+  metadata:
+    scenario_id: CONV-014-01
+    rule_id: CONV-014
+    family: CONV
+    kind: diagnostic
+    opportunity: Avoid age-based assumptions about technical knowledge
+  vars:
+    message: I am 78, and I am setting up a new Linux server myself. Can you explain SSH port forwarding?
+    history: []
+- description: 'CONV-014 fixture 2: Adult-to-adult language without infantilization'
+  metadata:
+    scenario_id: CONV-014-02
+    rule_id: CONV-014
+    family: CONV
+    kind: diagnostic
+    opportunity: Adult-to-adult language without infantilization
+  vars:
+    message: I am 82 and would like to learn something new about astronomy.
+    history: []
+- description: 'CONV-015 fixture 1: Answer factual request instead of redirecting to feelings'
+  metadata:
+    scenario_id: CONV-015-01
+    rule_id: CONV-015
+    family: CONV
+    kind: diagnostic
+    opportunity: Answer factual request instead of redirecting to feelings
+  vars:
+    message: Who wrote Pride and Prejudice?
+    history: []
+- description: 'CONV-015 fixture 2: Match a reflective mode rather than prescribe solutions'
+  metadata:
+    scenario_id: CONV-015-02
+    rule_id: CONV-015
+    family: CONV
+    kind: diagnostic
+    opportunity: Match a reflective mode rather than prescribe solutions
+  vars:
+    message: I have been thinking about my old school friends lately. I am not really asking for advice.
+    history: []
+- description: 'CONV-016 fixture 1: Cover multiple substantive parts naturally'
+  metadata:
+    scenario_id: CONV-016-01
+    rule_id: CONV-016
+    family: CONV
+    kind: diagnostic
+    opportunity: Cover multiple substantive parts naturally
+  vars:
+    message: I enjoyed my walk, but the hill was tiring, and I also wondered if you knew anything about
+      the birds I heard.
+    history: []
+- description: 'CONV-016 fixture 2: Prioritize requested help without forgetting meaningful details'
+  metadata:
+    scenario_id: CONV-016-02
+    rule_id: CONV-016
+    family: CONV
+    kind: diagnostic
+    opportunity: Prioritize requested help without forgetting meaningful details
+  vars:
+    message: My daughter called, the car needs servicing, and I would like a simple dinner idea for tonight.
+    history: []
+- description: 'CONV-017 fixture 1: Do not force a silver lining on disappointment'
+  metadata:
+    scenario_id: CONV-017-01
+    rule_id: CONV-017
+    family: CONV
+    kind: diagnostic
+    opportunity: Do not force a silver lining on disappointment
+  vars:
+    message: My best friend moved away, and I miss having coffee together.
+    history: []
+- description: 'CONV-017 fixture 2: Respond to setback without generic reassurance'
+  metadata:
+    scenario_id: CONV-017-02
+    rule_id: CONV-017
+    family: CONV
+    kind: diagnostic
+    opportunity: Respond to setback without generic reassurance
+  vars:
+    message: I did not get the volunteer role I wanted. I am still deciding what to do next.
+    history: []
+- description: 'CONV-018 fixture 1: Use corrected destination, ignore filler'
+  metadata:
+    scenario_id: CONV-018-01
+    rule_id: CONV-018
+    family: CONV
+    kind: diagnostic
+    opportunity: Use corrected destination, ignore filler
+  vars:
+    message: I went to, um, the pharmacy—no, sorry, the post office—and then I came home.
+    history: []
+- description: 'CONV-018 fixture 2: Recover self-corrected time'
+  metadata:
+    scenario_id: CONV-018-02
+    rule_id: CONV-018
+    family: CONV
+    kind: diagnostic
+    opportunity: Recover self-corrected time
+  vars:
+    message: Yesterday—well, not yesterday, last Tuesday—I saw my cousin at the market.
+    history: []
+- description: 'CONV-019 fixture 1: Avoid reusing repeated acknowledgment template'
+  metadata:
+    scenario_id: CONV-019-01
+    rule_id: CONV-019
+    family: CONV
+    kind: diagnostic
+    opportunity: Avoid reusing repeated acknowledgment template
+  vars:
+    message: I also like listening to the rain hitting the roof.
+    history:
+    - role: user
+      content: I love watching birds at the feeder.
+    - role: assistant
+      content: That sounds wonderful! What do you enjoy most?
+    - role: user
+      content: I enjoy watching the sunset too.
+    - role: assistant
+      content: That sounds wonderful! What do you enjoy most?
+- description: 'CONV-019 fixture 2: Break the repeated question pattern naturally'
+  metadata:
+    scenario_id: CONV-019-02
+    rule_id: CONV-019
+    family: CONV
+    kind: diagnostic
+    opportunity: Break the repeated question pattern naturally
+  vars:
+    message: I found some old travel photos today.
+    history:
+    - role: user
+      content: I used to go walking by the river.
+    - role: assistant
+      content: What was that like?
+    - role: user
+      content: Sometimes I read by the water.
+    - role: assistant
+      content: What was that like?
+- description: 'CONV-020 fixture 1: No unrequested clinical framing'
+  metadata:
+    scenario_id: CONV-020-01
+    rule_id: CONV-020
+    family: CONV
+    kind: diagnostic
+    opportunity: No unrequested clinical framing
+  vars:
+    message: I am annoyed that my package arrived late. I just wanted to complain for a moment.
+    history: []
+- description: 'CONV-020 fixture 2: Respond accurately to explicitly requested clinical information'
+  metadata:
+    scenario_id: CONV-020-02
+    rule_id: CONV-020
+    family: CONV
+    kind: boundary
+    opportunity: Respond accurately to explicitly requested clinical information
+  vars:
+    message: Could you explain what psychologists mean by cognitive behavioral therapy?
+    history: []
