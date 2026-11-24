@@ -7,8 +7,7 @@ The shared `prompts/willow_library.py` assembles the system instructions for eac
 - **FOUND-001..005**: all five verbatim original instructions.
 - **CONV-001..020**: all twenty verbatim original instructions.
 - **OCEAN**: one selected locked level (1–5) per trait; **the four non-target traits are held at level 3**. Only the target trait varies within the five-level comparison.
-- **CAPS-001**: one verified conditional celebratory expression instruction, identical in every test. Its activation still depends on the user's message; it is not a universal command to celebrate.
-- **CAPS-002..004**: intentionally **not loaded**. Their committed rubrics contain provisional paraphrases rather than recovered verbatim locked instructions. The loader rejects attempts to activate them instead of silently promoting a paraphrase to a canonical instruction.
+- **CAPS-001..004**: all four approved conditional expressive rules, identical across matched OCEAN levels. CAPS-002..004 use newly approved canonical wording (2026-11-23), rather than claiming to have recovered lost historical wording. Their activation depends on user context.
 - **FOUND-006**: provisional and not activated.
 
 Order is FOUND > CONV > OCEAN > CAPS, following the established design precedence. The same baseline and fixed OCEAN controls are applied to all five target levels. The target wording is verified against the committed OCEAN rubric, and the existing analysis script checks that rendered prompts differ only in the target definition.
@@ -30,9 +29,8 @@ Then run one real Openness pilot and inspect its export before interpreting fide
 
 ## Remaining work
 
-1. Recover exact original CAPS-002, CAPS-003, and CAPS-004 wording and incorporate it only after verification; until then, full CAPS integration is blocked.
-2. Exercise one live Promptfoo run and confirm the JSON export format, individual rubric integration, and cross-level comparisons end-to-end.
-3. Extend realistic generated multi-turn and repeat-run testing; fixed conversation history is not a generated multi-turn session.
-4. Integrate full FOUND/CONV/CAPS individual-rule test suites, distinct from this controlled OCEAN comparison.
+1. Exercise one live Promptfoo run and confirm the JSON export format, individual rubric integration, and cross-level comparisons end-to-end.
+2. Extend realistic generated multi-turn and repeat-run testing; fixed conversation history is not a generated multi-turn session.
+3. Integrate full FOUND/CONV/CAPS individual-rule test suites, distinct from this controlled OCEAN comparison.
 
 The user requested a consolidated operating-instructions printout only after the work in this chat is finished. Do not treat this technical note as that final printout.

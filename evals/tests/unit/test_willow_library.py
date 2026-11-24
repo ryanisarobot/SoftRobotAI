@@ -13,7 +13,7 @@ spec.loader.exec_module(library)
 
 
 def make_rubrics(root):
-    for group, count in (('FOUND', 5), ('CONV', 20), ('CAPS', 1)):
+    for group, count in (('FOUND', 5), ('CONV', 20), ('CAPS', 4)):
         path = root / 'rubrics' / group
         path.mkdir(parents=True, exist_ok=True)
         for n in range(1, count + 1):
@@ -48,10 +48,10 @@ class VerifiedLibraryTests(unittest.TestCase):
 
     def test_exact_25_common_rules_and_conditional_caps(self):
         entries = library.common_rules()
-        self.assertEqual(len(entries), 26)
+        self.assertEqual(len(entries), 29)
         self.assertEqual(sum(k.startswith('FOUND-') for k, _ in entries), 5)
         self.assertEqual(sum(k.startswith('CONV-') for k, _ in entries), 20)
-        self.assertEqual([k for k, _ in entries if k.startswith('CAPS-')], ['CAPS-001'])
+        self.assertEqual([k for k, _ in entries if k.startswith('CAPS-')], ['CAPS-001', 'CAPS-002', 'CAPS-003', 'CAPS-004'])
 
     def test_all_25_locked_ocean_definitions(self):
         self.assertEqual(sum(map(len, library.ocean_levels().values())), 25)
@@ -63,6 +63,7 @@ class VerifiedLibraryTests(unittest.TestCase):
             prompt = library.build_system_prompt('E', code, f'Verified E-{n} instruction.')
             self.assertEqual(prompt.count('OCEAN Extraversion (E-'), 1)
             self.assertEqual(prompt.count('CAPS-001: Verified CAPS-001 rule.'), 1)
+            self.assertEqual(prompt.count('CAPS-004: Verified CAPS-004 rule.'), 1)
             self.assertIn('OCEAN Openness (O-3): Verified O-3 instruction.', prompt)
             self.assertIn('OCEAN Neuroticism (N-3): Verified N-3 instruction.', prompt)
             prompt = re.sub(r'OCEAN Extraversion \(E-[1-5]\): Verified E-[1-5] instruction.',
@@ -70,10 +71,10 @@ class VerifiedLibraryTests(unittest.TestCase):
             outputs.append(prompt)
         self.assertEqual(len(set(outputs)), 1)
 
-    def test_reject_unverified_caps_and_tampered_target(self):
-        with self.assertRaisesRegex(ValueError, 'Unverified'):
+    def test_reject_unknown_caps_and_tampered_target(self):
+        with self.assertRaisesRegex(ValueError, 'Unknown'):
             library.build_system_prompt('O', 'O-1', 'Verified O-1 instruction.',
-                                        active_caps=['CAPS-002'])
+                                        active_caps=['CAPS-005'])
         with self.assertRaisesRegex(ValueError, 'differs'):
             library.build_system_prompt('O', 'O-1', 'Paraphrase')
 

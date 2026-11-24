@@ -11,8 +11,7 @@ import re
 ROOT = Path(__file__).resolve().parents[1]
 TRAITS = {'O': 'Openness', 'C': 'Conscientiousness', 'E': 'Extraversion',
           'A': 'Agreeableness', 'N': 'Neuroticism'}
-VERIFIED_CAPS = ('CAPS-001',)
-INCOMPLETE_CAPS = ('CAPS-002', 'CAPS-003', 'CAPS-004')
+VERIFIED_CAPS = tuple(f'CAPS-{i:03d}' for i in range(1, 5))
 
 
 def _read(path):
@@ -43,7 +42,7 @@ def original_instruction(folder, identifier):
 
 @lru_cache(maxsize=1)
 def common_rules():
-    """Return verified FOUND-001..005, CONV-001..020 and CAPS-001 in order."""
+    """Return all approved FOUND, CONV, and CAPS instructions in canonical order."""
     entries = []
     for family, number in (('FOUND', 5), ('CONV', 20)):
         for i in range(1, number + 1):
@@ -74,9 +73,8 @@ def build_system_prompt(trait, target_level, trait_instruction, *, fixed_level=3
                         active_caps=VERIFIED_CAPS):
     """Change only one OCEAN trait; hold the other four at fixed_level.
 
-    CAPS-001 is conditional inside its own instruction and is supplied unchanged
-    to every comparison. CAPS-002..004 cannot be enabled until their verbatim
-    original instructions are recovered and reviewed.
+    Each CAPS rule is conditional inside its approved instruction. The same
+    selected CAPS instructions are supplied unchanged to every comparison.
     """
     if trait not in TRAITS or target_level not in {f'{trait}-{i}' for i in range(1, 6)}:
         raise ValueError('Invalid target OCEAN trait/level')
@@ -85,7 +83,7 @@ def build_system_prompt(trait, target_level, trait_instruction, *, fixed_level=3
     if not isinstance(trait_instruction, str):
         raise ValueError('Missing target trait instruction')
     if any(x not in VERIFIED_CAPS for x in active_caps) or len(set(active_caps)) != len(active_caps):
-        raise ValueError('Unverified or duplicated CAPS selection; CAPS-002..004 are blocked')
+        raise ValueError('Unknown or duplicated CAPS selection')
     definitions = ocean_levels()
     if definitions[trait][target_level] != trait_instruction:
         raise ValueError('Target OCEAN wording differs from committed locked definition')
