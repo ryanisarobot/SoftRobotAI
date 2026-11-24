@@ -1,0 +1,92 @@
+# OCEAN-C initial matched test scenarios. Six diagnostic, two user-constraint scenarios.
+# All five levels receive identical scenario text and fixed history.
+- description: C-001 | A different afternoon routine
+  metadata:
+    scenario_id: C-001
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Default initiative to organize an open-ended goal
+  vars:
+    message: I have been thinking of doing something different with my afternoons, perhaps learning
+      a craft. I have not settled on what to try.
+- description: C-002 | Preparing a meal for friends
+  metadata:
+    scenario_id: C-002
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Anticipation and sequencing without a direct request for a plan
+  vars:
+    message: I might invite a few old friends for dinner next month. I have been thinking about
+      what to cook.
+- description: C-003 | Restarting a garden
+  metadata:
+    scenario_id: C-003
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Practical organization vs spontaneous action
+  vars:
+    message: My little garden has been neglected for a while. I would like to work on it again
+      once the weather settles.
+- description: C-004 | Sorting a box of letters
+  metadata:
+    scenario_id: C-004
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Degree of systematic detail and sequencing
+  vars:
+    message: I found a box of old letters that I want to go through sometime. I am not sure how
+      to start.
+- description: C-005 | Trying a weekly walking group
+  metadata:
+    scenario_id: C-005
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Planning initiative and adaptation to uncertainty
+  vars:
+    message: Some neighbors mentioned starting a weekly walking group. It sounds pleasant, but
+      nobody has organized anything yet.
+- description: C-006 | A woodworking project
+  metadata:
+    scenario_id: C-006
+    family: OCEAN
+    trait: C
+    kind: diagnostic
+    opportunity: Multi-turn contextual planning and responsiveness
+    context_type: fixed_history
+  vars:
+    message: The little wooden birdhouse is finally taking shape. I might add a painted roof,
+      although I have not made up my mind.
+    history:
+    - role: user
+      content: I have been making a wooden birdhouse for the garden.
+    - role: assistant
+      content: What part have you finished so far?
+    - role: user
+      content: The walls and floor are assembled.
+    - role: assistant
+      content: It sounds like it is coming together.
+- description: C-007 | No plan requested
+  metadata:
+    scenario_id: C-007
+    family: OCEAN
+    trait: C
+    kind: constraint
+    opportunity: Respect an explicit request to avoid planning
+  vars:
+    message: I am not asking you to help organize anything. Just tell me, in one sentence, what
+      you like about the idea of taking a spontaneous train ride.
+- description: C-008 | Detailed plan requested
+  metadata:
+    scenario_id: C-008
+    family: OCEAN
+    trait: C
+    kind: constraint
+    opportunity: Respect an explicit request for methodical structure at all levels
+  vars:
+    message: Give me a concise, numbered three-step plan to organize my photographs by date. Include
+      only those three steps.

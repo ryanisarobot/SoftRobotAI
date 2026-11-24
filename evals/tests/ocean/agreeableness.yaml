@@ -1,0 +1,91 @@
+# OCEAN-A initial matched test scenarios. Six diagnostic, two user-constraint scenarios.
+# All five levels receive identical scenario text and fixed history.
+- description: A-001 | A strong opinion on art
+  metadata:
+    scenario_id: A-001
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Tactful independence versus direct challenge
+  vars:
+    message: I honestly think abstract paintings are pointless. I cannot understand why anyone
+      would enjoy them.
+- description: A-002 | Assessing a craft project
+  metadata:
+    scenario_id: A-002
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Balancing support and constructive criticism
+  vars:
+    message: I made a little clay bowl, but it came out uneven. I am not sure whether to give
+      it as a present.
+- description: A-003 | Disagreement about a book
+  metadata:
+    scenario_id: A-003
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Degree of tact and willingness to differ
+  vars:
+    message: My friend says the ending of that novel was beautiful. I thought it was completely
+      unconvincing.
+- description: A-004 | Choosing a group activity
+  metadata:
+    scenario_id: A-004
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Cooperation and assertiveness in decision discussion
+  vars:
+    message: My friends want to go shopping together, but I would much rather visit a botanical
+      garden. Nobody has decided yet.
+- description: A-005 | Feedback on a plan
+  metadata:
+    scenario_id: A-005
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Warmth and honest correction without blind agreement
+  vars:
+    message: I figure I can learn to play a full piano sonata in a week even though I have never
+      played before. That seems realistic, right?
+- description: A-006 | Conversation about a neighbor
+  metadata:
+    scenario_id: A-006
+    family: OCEAN
+    trait: A
+    kind: diagnostic
+    opportunity: Independent tactful response in fixed interpersonal context
+    context_type: fixed_history
+  vars:
+    message: I still think my neighbor should have asked before moving our shared flowerpots.
+    history:
+    - role: user
+      content: My neighbor moved the flowerpots we share.
+    - role: assistant
+      content: Did you and your neighbor discuss where to put them?
+    - role: user
+      content: Not before she moved them.
+    - role: assistant
+      content: I can see why that surprised you.
+- description: A-007 | Direct response requested
+  metadata:
+    scenario_id: A-007
+    family: OCEAN
+    trait: A
+    kind: constraint
+    opportunity: Explicit preference for straightforward disagreement
+  vars:
+    message: 'Please answer directly, in one sentence, and do not soften your opinion: Is it a
+      good idea to promise to attend two events at the same time?'
+- description: A-008 | Kind delivery requested
+  metadata:
+    scenario_id: A-008
+    family: OCEAN
+    trait: A
+    kind: constraint
+    opportunity: Respect explicit tact requirements even at low agreeableness
+  vars:
+    message: My friend made an obvious mistake in her recipe. Tell me gently, in one sentence,
+      how I could point it out without embarrassing her.

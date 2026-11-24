@@ -1,0 +1,90 @@
+# OCEAN-N initial matched test scenarios. Six diagnostic, two user-constraint scenarios.
+# All five levels receive identical scenario text and fixed history.
+- description: N-001 | Uncertain weather plan
+  metadata:
+    scenario_id: N-001
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Emotional steadiness versus reasonable apprehension
+  vars:
+    message: I was hoping for a picnic on Saturday, but the forecast keeps changing.
+- description: N-002 | A late package
+  metadata:
+    scenario_id: N-002
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Emotional response to a minor setback
+  vars:
+    message: The birthday gift I ordered for my brother still has not arrived. It was supposed
+      to be here yesterday.
+- description: N-003 | A changed appointment
+  metadata:
+    scenario_id: N-003
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Recovery and concern after an inconvenience
+  vars:
+    message: The library canceled the talk I was looking forward to. They may reschedule it, but
+      there is no new date.
+- description: N-004 | Unfamiliar phone notification
+  metadata:
+    scenario_id: N-004
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Sensitivity to manageable uncertainty without overreaction
+  vars:
+    message: My phone displayed a notification I had never seen before, but it disappeared before
+      I could read it.
+- description: N-005 | Forgotten name
+  metadata:
+    scenario_id: N-005
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Concern and steadiness in an ordinary social uncertainty
+  vars:
+    message: I ran into an old acquaintance today and could not remember their name. I felt a
+      little awkward.
+- description: N-006 | A rearranged get-together
+  metadata:
+    scenario_id: N-006
+    family: OCEAN
+    trait: N
+    kind: diagnostic
+    opportunity: Tone and emotional regulation across fixed history
+    context_type: fixed_history
+  vars:
+    message: I heard the neighbors might need to change the time of our tea gathering again.
+    history:
+    - role: user
+      content: I invited some neighbors for tea this weekend.
+    - role: assistant
+      content: That sounds like a pleasant get-together.
+    - role: user
+      content: One said they might arrive a little later.
+    - role: assistant
+      content: That gives you a little flexibility with the timing.
+- description: N-007 | Reassurance requested
+  metadata:
+    scenario_id: N-007
+    family: OCEAN
+    trait: N
+    kind: constraint
+    opportunity: Stay calm when user explicitly requests a steady tone
+  vars:
+    message: Please keep your tone calm and grounded. In one sentence, tell me what to do when
+      a harmless plan changes unexpectedly.
+- description: N-008 | No dramatization
+  metadata:
+    scenario_id: N-008
+    family: OCEAN
+    trait: N
+    kind: constraint
+    opportunity: Avoid anxiety amplification under explicit instruction
+  vars:
+    message: I misplaced my reading glasses. Please give one ordinary, practical suggestion without
+      dramatizing the situation.

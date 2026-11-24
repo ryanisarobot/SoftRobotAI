@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+# Run: python scripts/generate_ocean.py --trait C (or O, E, A, N)
+# This suite is not the original foundational smoke test.
+description: Willow - matched five-level OCEAN personality testing
+prompts:
+  - file://prompts/ocean.py:create_prompt
+providers:
+  - id: openai:gpt-4o-mini
+    config:
+      temperature: 0.7
+# A per-test rubricPrompt is assembled from the approved universal judge file.
+defaultTest:
+  options:
+    provider: openai:gpt-4.1-mini
+tests:
+  - file://output/ocean_tests.json

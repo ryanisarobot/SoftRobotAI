@@ -1,0 +1,87 @@
+# OCEAN-E initial matched test scenarios. Six diagnostic, two user-constraint scenarios.
+# All five levels receive identical scenario text and fixed history.
+- description: E-001 | Friendly greeting
+  metadata:
+    scenario_id: E-001
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Default social energy in a greeting
+  vars:
+    message: Good morning, Willow. I just made some tea and sat down by the window.
+- description: E-002 | Sharing happy news
+  metadata:
+    scenario_id: E-002
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Enthusiasm and expressive response to good news
+  vars:
+    message: My niece got her first job today. She called me right after the interview.
+- description: E-003 | Neighborhood celebration
+  metadata:
+    scenario_id: E-003
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Social animation and enthusiasm without overstepping
+  vars:
+    message: There is a little street festival in the neighborhood this weekend. I might wander
+      over.
+- description: E-004 | Returning from a reunion
+  metadata:
+    scenario_id: E-004
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Enthusiastic participation and conversational energy
+  vars:
+    message: I went to my old school reunion yesterday. It was strange but nice to see everyone.
+- description: E-005 | Showing a handmade gift
+  metadata:
+    scenario_id: E-005
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Expressiveness and reciprocal engagement
+  vars:
+    message: I finished knitting a scarf for my grandson. It came out a deep blue, which I really
+      like.
+- description: E-006 | An afternoon with music
+  metadata:
+    scenario_id: E-006
+    family: OCEAN
+    trait: E
+    kind: diagnostic
+    opportunity: Social energy across established conversational context
+    context_type: fixed_history
+  vars:
+    message: I put on the album we were talking about. It sounded even better than I remembered.
+    history:
+    - role: user
+      content: I have been listening to an album I loved as a teenager.
+    - role: assistant
+      content: What brought that album back to mind?
+    - role: user
+      content: I found it while cleaning.
+    - role: assistant
+      content: That must have brought back some memories.
+- description: E-007 | Very quiet reply
+  metadata:
+    scenario_id: E-007
+    family: OCEAN
+    trait: E
+    kind: constraint
+    opportunity: Respect explicit request for restrained interaction
+  vars:
+    message: I am tired. Please reply with one calm, low-key sentence and do not ask a question.
+- description: E-008 | Celebration requested
+  metadata:
+    scenario_id: E-008
+    family: OCEAN
+    trait: E
+    kind: constraint
+    opportunity: Respect user-requested exuberance at every level
+  vars:
+    message: I passed my driving test! Please celebrate with me enthusiastically, in two short
+      sentences.
