@@ -12,7 +12,7 @@ This is an **initial test-fixture expansion**, not a claim that the scenarios ha
 | A | `tests/ocean/agreeableness.yaml` | A-1 ... A-5 | `OCEAN-A.txt` | `OCEAN-A-CROSS.txt` |
 | N | `tests/ocean/neuroticism.yaml` | N-1 ... N-5 | `OCEAN-N.txt` | `OCEAN-N-CROSS.txt` |
 
-Each trait contains six diagnostic inputs and two constraint checks. Scenario 006 uses a **fixed supplied history**; it does not test a genuinely generated multi-turn conversation. Each scenario is run with all five levels and the same model and baseline. All other trait definitions are held absent (rather than set to four median levels) in this *isolated* trait pilot. The baseline in `prompts/willow.json` remains the partial FOUND/CONV prompt, not the complete Willow runtime. Full library integration and non-target OCEAN controls are still needed before full combined-system evaluation.
+Each trait contains six diagnostic inputs and two constraint checks. Scenario 006 uses a **fixed supplied history**; it does not test a genuinely generated multi-turn conversation. Each scenario is run with all five levels and the same model and baseline. The assembler now supplies all five FOUND and twenty CONV verified rules, CAPS-001, and the four non-target OCEAN traits at level 3. Only the target OCEAN instruction changes between matched levels. CAPS-002..004 are blocked pending recovery of their exact canonical instruction texts; see `FULL-PROMPT-INTEGRATION.md`. Earlier partial-baseline runs are not directly comparable.
 
 ## Windows commands from `evals`
 
@@ -55,4 +55,4 @@ The individual grader loads `graders/judge-prompt.txt` into the assertion `rubri
 
 The new generic pipeline has passed seven synthetic offline tests with mock Promptfoo exports and a mock Chat Completions judge. It has **not** yet been exercised using real Promptfoo exports, real model responses, or a live LLM judge. Check provider and grade metadata on your first live export before interpreting the report.
 
-The earlier Openness-specific launcher and analyzer remain available and unchanged. Once the first live export is verified, the generic scripts can replace that older pilot path. Do not commit the `output/` directory, API keys, or private user/participant conversations.
+The earlier Openness-specific launcher and analyzer remain available, and the legacy prompt entry point now uses the same verified library assembler. Once the first live export is verified, the generic scripts can replace that older pilot path. Do not commit the `output/` directory, API keys, or private user/participant conversations.

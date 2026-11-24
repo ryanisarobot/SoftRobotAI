@@ -26,6 +26,6 @@ For review without API cost, omit `--judge`; no networking occurs. This script u
 
     python -m unittest discover -s tests/unit -v
 
-**Validation status:** synthetic Promptfoo v3 JSON exports and a mocked judge API were tested locally. Real Promptfoo exports and live API grading have **not** yet been tested; run the one-time live pilot and inspect JSON output. The underlying prompt still contains only the previous limited FOUND/CONV baseline, not the full Willow runtime prompt library.
+**Validation status:** synthetic Promptfoo v3 JSON exports and a mocked judge API were tested locally. Real Promptfoo exports and live API grading have **not** yet been tested; run the one-time live pilot and inspect JSON output. The current testing prompt contains FOUND-001..005, CONV-001..020, CAPS-001, and controlled OCEAN trait levels. CAPS-002..004 and full production-runtime integration remain pending.
 
 Never commit the `.env` file, model outputs, study participant data, or the generated `output/` directory. Test conversations may be transmitted to an LLM evaluator when `--judge` is specified.

@@ -17,7 +17,7 @@ The model under test is openai:gpt-4o-mini. The separate judge is openai:gpt-4.1
 
 ## Controlled comparison
 
-The scenario source is tests/ocean/openness.yaml. The generator takes the five locked Openness instructions verbatim from the ORIGINAL INSTRUCTIONS section of rubrics/OCEAN/OCEAN-O.txt. The common prompt is the existing prompts/willow.json system text, held fixed in every condition. That baseline currently contains FOUND-001–005 and CONV-001 only. Full FOUND/CONV/CAPS and non-target OCEAN assembly remains pending. This pilot is not full-runtime validation.
+The scenario source is tests/ocean/openness.yaml. The generator takes the five locked Openness instructions verbatim from the ORIGINAL INSTRUCTIONS section of rubrics/OCEAN/OCEAN-O.txt. The common prompt is assembled from the exact original texts in the committed FOUND-001..005 and CONV-001..020 rubrics, the conditional CAPS-001 instruction, and fixed C-3/E-3/A-3/N-3 definitions. Only the selected O level varies. CAPS-002..004 are not loaded because their verbatim locked wording remains unavailable; see `FULL-PROMPT-INTEGRATION.md`. This is still not end-to-end Willow runtime validation.
 
 Each scenario uses identical user input, any fixed conversation history, model and sampling settings across levels. Only the target Openness instruction changes. O-006 uses fixed prior turns; it is not a live multi-turn generated conversation.
 
